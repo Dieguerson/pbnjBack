@@ -22,3 +22,8 @@ app.get("/productoRandom", async (req, res) => {
   const product = await productos.getById(randomizer)
   res.send({ID: randomizer, Producto: product})
 })
+
+app.listen(PORT, () => {
+  console.log(`Server run on port ${PORT}`)
+})
+
