@@ -1,0 +1,18 @@
+// -list.pug
+section.flex.flex-col.justify-center.items-center
+  if error !== undefined
+    article(class="hover:shadow-lg shadow-orange-400 p-4 flex flex-col items-center border-2 border-blue-500 bg-blue-500/20 col-span-2")
+      p.italic.underline.text-lg= error
+  else
+    article(class="hover:shadow-lg shadow-orange-400 flex flex-col items-center")
+      table.border-2.border-blue-500
+        tr.border-2.border-blue-500
+          th.font-bold.border-2.border-blue-500.px-2 Artículo
+          th.font-bold.border-2.border-blue-500.px-2 Precio
+          th.font-bold.border-2.border-blue-500.px-2 Imagen
+        each product in data
+          tr.border-2.border-blue-500.w-fit
+            th.border-2.border-blue-500.px-2= product.title
+            th.border-2.border-blue-500.px-2.text-center= "$" + product.price
+            th.flex.border-1.border-blue-500.p-2.justify-center.box-border.p-2.justify-center.box-border
+              img.h-10(src=product.thumbnail alt=product.name)

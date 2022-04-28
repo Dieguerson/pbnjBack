@@ -1,0 +1,10 @@
+// -form.pug
+form.flex.flex-col.max-w-fit.border-4.border-blue-900.rounded-lg.p-4(action="/productos" method="POST")
+  h2.text-2xl.font-bold.text-blue-800.mb-4 Ingresá tu producto!
+  label.font-bold.text-blue-500(for="title") Title
+  input(id="title" type="text" name="title" class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700")
+  label.font-bold.text-blue-500(for="price") Price
+  input(id="price" type="number" name="price" min="0" step="0.01" class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700")
+  label.font-bold.text-blue-500(for="thumbnail") Thumbnail
+  input(id="thumbnail" type="text" name="thumbnail" class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700")
+  input(type="submit", value="Enviar" class="border border-blue-300 rounded-md bg-blue-400 w-fit self-end mt-3 p-1 font-bold text-red-500 hover:shadow-md shadow-orange-400")

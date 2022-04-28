@@ -1,0 +1,10 @@
+doctype html
+html(lang="en")
+  head
+    include includes/head.pug
+    title Lista de Productos
+  body.bg-orange-200
+    h1.font-bold.text-6xl.text-center.mb-6.text-red-500 Lista de Productos:
+    section.flex.flex-col.justify-center.items-center
+      include includes/list.pug
+      a(href="/" class="text-xl text-red-500 hover:text-red-700 visited:text-blue-700 mt-4") Inicio
