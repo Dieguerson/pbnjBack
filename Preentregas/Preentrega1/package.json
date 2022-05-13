@@ -1,0 +1,31 @@
+{
+  "name": "pbnj_back",
+  "version": "1.0.0",
+  "description": "Una poketienda de mentiritas",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dieguerson/pbnjBack.git"
+  },
+  "keywords": [
+    "backend",
+    "coder",
+    "pokemon"
+  ],
+  "author": "Diego Gabrielli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dieguerson/pbnjBack/issues"
+  },
+  "homepage": "https://github.com/Dieguerson/pbnjBack#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16"
+  },
+  "devDependencies": {
+    "moment": "^2.29.3"
+  }
+}
