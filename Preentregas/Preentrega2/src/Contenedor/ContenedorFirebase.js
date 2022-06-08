@@ -20,21 +20,25 @@ class ContenedorDB {
     await this.collection.add(object)
       .then(async ({id}) => {
         await this.collection.doc(id).update({id: id})
-        toReturn = await this.collection.doc(id).get()
+        const created = await this.collection.doc(id).get()
+        toReturn = {...created.data()}
       })
 
     return toReturn;
   };
 
   async modify(id, object) {
-    const newProduct = await this.collection.doc(id).update({...object})
+    let toReturn
 
-    return newProduct;
+    await this.collection.doc(id).update({...object})
+    const updated = await this.collection.doc(id).get()
+    toReturn = {...updated.data()}
+
+    return toReturn;
   };
 
   async getById(id) {
     let toReturn
-    console.log(id)
 
     const db = await this.collection.doc(id).get()
     toReturn = {...db.data()}
@@ -50,7 +54,7 @@ class ContenedorDB {
       toReturn.push({...doc.data()})
     })
     toReturn.sort((a, b) => {
-      return a.number - b.number
+      return a.code - b.code
     })
 
     return toReturn;

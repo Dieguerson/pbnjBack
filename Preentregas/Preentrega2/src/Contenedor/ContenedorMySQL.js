@@ -19,7 +19,7 @@ class ContenedorDB {
       .then(async () => {
         await knexPlus.from(this.table).select('*')
           .then((data) => {
-            db = data;
+            db = data[data.length - 1];
           })
           .catch(err => console.log(err));
       })
@@ -30,8 +30,6 @@ class ContenedorDB {
 
   async modify(id, object) {
     let db;
-
-    console.log(id, object)
 
     await knexPlus(this.table).where({ id: id }).update(object)
       .then(async () => {
@@ -54,7 +52,6 @@ class ContenedorDB {
         byId = data;
         if (this.table === "carrito") {
           byId[0].products = JSON.parse(byId[0].products)
-          console.log(byId)
         }
       })
       .catch(err => console.log(err));

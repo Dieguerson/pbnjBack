@@ -9,7 +9,7 @@ fetch('/api/productos')
       data.forEach(poke => {
         newPoke += `
           <div class="border-2 border-black rounded flex flex-col items-center p-2">
-            <h3 class="text-xl font-bold">${poke.name}</h3>
+            <h3 class="text-xl font-bold capitalize">${poke.name}</h3>
             <img class="w-10 h-10" src="${poke.thumbnail || poke.sprite}" alt="${poke.name}">
             <p><b>Price:</b> $${poke.price}</p>
             <p><b>Stock:</b> ${poke.stock}</p>
@@ -48,8 +48,11 @@ const killPoke = (id) => {
   fetch(`/api/productos/admin/${id}`, {method: "DELETE"})
 }
 
+let externalId
+
 const updatePoke = (id) => {
   const toModify = pokeDb.find(poke => poke.id === id || poke._id === id)
+  externalId = id
 
   document.querySelector("#name").value = toModify.name
   document.querySelector("#code").value = toModify.code
@@ -63,6 +66,8 @@ const updatePoke = (id) => {
   document.querySelector("#update").classList.toggle("hidden")
 }
 
+
+
 document.querySelector('#update').addEventListener('click', (e) => {
   e.preventDefault();
   const name = document.querySelector("#name").value
@@ -71,7 +76,7 @@ document.querySelector('#update').addEventListener('click', (e) => {
   const thumbnail = document.querySelector("#thumbnail").value
   const price = document.querySelector("#price").value
   const stock = document.querySelector("#stock").value
-  const toModify = pokeDb.find(poke => poke.code === Number(code) || poke.number === Number(code))
+  const toModify = pokeDb.find(poke => poke.id === externalId || poke._id === externalId)
   const obj = {name: name, code: code, description: description, thumbnail: thumbnail, price: price, stock: stock}
   fetch(`api/productos/admin/${toModify.id || toModify._id}`, {method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(obj) })
 })

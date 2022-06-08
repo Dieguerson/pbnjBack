@@ -8,6 +8,7 @@ class Contenedor{
 
   async save(obj){
     let precursor = []
+    let toReturn
 
     await fs.promises.readFile(this.file, {encoding: "utf-8"})
       .then(res => precursor = JSON.parse(res))
@@ -24,7 +25,7 @@ class Contenedor{
     if (id === undefined || id === null ) {
       obj.id = 1;
     } else {
-      obj.id = id + 1;
+      obj.id = Number(id) + 1;
     }
 
     obj.timestamp = moment().format('DD/MM/YYYY, HH:MM:SS');
@@ -32,16 +33,17 @@ class Contenedor{
     precursor.push(obj);
 
     await fs.promises.writeFile(this.file, JSON.stringify(precursor), {encoding: "utf-8"})
-      .then(() => console.log(obj.id))
+      .then(() => toReturn = obj)
       .catch((err) => {
         throw "Algo malió sal en el guardado!"
       });
+
+    return toReturn
   }
 
   async modify(id, obj){
     let precursor = []
     let toReturn
-    console.log(obj)
 
     obj.timestamp = moment().format('DD/MM/YYYY, HH:MM:SS');
 
@@ -56,7 +58,6 @@ class Contenedor{
     
     precursor.map(item => {
       if (item.id === Number(obj.id)) {
-        console.log(item.id)
         precursor[precursor.indexOf(item)] = obj
       }
     })
@@ -68,8 +69,6 @@ class Contenedor{
       .catch((err) => {
         throw "Algo malió sal en el guardado!"
       });
-
-      console.log(toReturn)
 
       return toReturn;
   }
@@ -94,9 +93,6 @@ class Contenedor{
     .then(res => database = JSON.parse(res))
     .catch(err => {
         throw "Algo malió sal en la averiguación!"
-    })
-    .finally(() => {
-      console.table(database)
     })
     return database
   }

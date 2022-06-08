@@ -31,10 +31,8 @@ router.post('/productos/:auth', async (req, res) => {
       price:  Number(price),
       stock: Number(stock)
     };
-    await db.save(newItem);
-    const updatedDb = await db.getAll();
-    const fullNew = updatedDb[updatedDb.length - 1]
-    res.send(fullNew);
+    const created = await db.save(newItem);
+    res.send(created);
   } else {
     res.send({Error: 401, descripcion: 'Su cuenta no tiene permiso para realizar pedidos POST a la ruta /api/productos. Comuníquese con su administrador.'})
   }

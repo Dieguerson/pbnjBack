@@ -57,6 +57,9 @@ class ContenedorDB {
     await this.table.find()
       .then((data) => {
         db = data;
+        db.sort((a, b) => {
+          return a.code - b.code
+        })
       })
       .catch(err => console.log(err));
 

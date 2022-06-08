@@ -4,7 +4,7 @@ const app = express();
 const productos = require('./src/routes/productos');
 const carrito = require('./src/routes/carrito');
 
-console.log(process.env.DB)
+console.log("Base de Datos: ", process.env.DB)
 
 app.use(express.json());
 app.use(express.static(__dirname + "/public/"))

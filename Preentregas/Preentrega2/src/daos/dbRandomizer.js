@@ -23,14 +23,14 @@ const dbRandomizer = () => {
 
 dbRandomizer()
 
-
+/*
 // Definiciones para fijar la Base de Datos
 // env.DB = 'File System'
-env.DB = 'Firebase'
-// env.DB = 'Mongo'
+// env.DB = 'Firebase'
+//env.DB = 'Mongo'
 // env.DB = 'MySQL'
 // FIN - Definiciones para fijar la Base de Datos
-
+*/
 
 let Carrito;
 switch (process.env.DB) {
