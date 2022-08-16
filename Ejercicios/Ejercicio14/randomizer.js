@@ -1,3 +1,8 @@
+process.on('message', (msg) => {
+  process.send(crazyNumbers(msg.ammount))
+})
+
+
 const crazyNumbers = (ammount) => {
   const orderedCrazy = {};
 
@@ -17,5 +22,3 @@ const crazyNumbers = (ammount) => {
 
   return orderedCrazy
 }
-
-module.exports = crazyNumbers
