@@ -9,14 +9,20 @@ const Products = require('../daos/ProductsMongo')
 const CartDb = new Cart();
 const ProductsDb = new Products()
 
+const logger = require('../utils/logger')
+
 router.use(express.json())
 router.use(bodyParser.urlencoded({limit: '5000mb', extended: true, parameterLimit: 100000000000}));
 
-
 router.post('/carrito/productos', (req, res, next) => {
-  const { id } = req.body
-  res.redirect(307, `/api/carrito/${id}/productos`)
-  next()
+  if (req.session.passport) {
+    const { id } = req.body
+    res.redirect(307, `/api/carrito/${id}/productos`)
+    next()
+  } else {
+    logger.warn('Intento de agregar al carrito sin loggeo')
+    res.status(401).send()
+  }
 })
 
 router.post('/carrito/:id/productos', async (req, res) => {

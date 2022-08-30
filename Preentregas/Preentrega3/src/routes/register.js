@@ -9,7 +9,7 @@ const CartDb = new Cart()
 
 const passport = require('../utils/passport')
 
-const sendMail = require('../utils/mailing')
+const { sendMail } = require('../utils/mailing')
 
 const routes = require('../utils/routes')
 

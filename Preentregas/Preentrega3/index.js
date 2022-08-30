@@ -26,17 +26,20 @@ const { MODE } = process.env
 const cpus = os.cpus().length
 const pid = process.pid
 
+const logger = require('./src/utils/logger')
+
 if (cluster.isMaster && MODE === 'CLUSTER') {
-  console.log('Master Process - pid: ' + pid)
+  logger.info('Master Process - pid: ' + pid)
   for (let i = 0; i < cpus; i++){
     cluster.fork()
   }
 
   cluster.on('exit', (_) => {
-    console.log(`Worker ${pid}`)
+    logger.info(`Worker ${pid}`)
   })
 } else {
-  console.log('Worker Process - pid: ' + pid)
+  logger.info('Worker Process - pid: ' + pid)
+
   app.use((_, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     next();
@@ -84,10 +87,11 @@ if (cluster.isMaster && MODE === 'CLUSTER') {
   app.get('*', function(req, res) {
     const route = req.originalUrl
     const method = req.method
+    logger.warn(`Intento de navegación a ${method} ${route}`)
     res.send({error: 404, descripcion:`Erm, nos descubriste. No implementamos ${method} para la ruta ${route}`})
   });
 
   app.listen(PORT, () => {
-    console.log(`Server Arriba en el puerto: ${PORT}`);
+    logger.info(`Server Arriba en el puerto: ${PORT}`);
   });
 }

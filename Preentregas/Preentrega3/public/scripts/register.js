@@ -11,8 +11,21 @@ const userInputs = {
 const submit = document.querySelector('#submit')
 
 const enableSignIn = () => {
+  const userPhone = userInputs.userPhone.value
   const userMinimumData = userInputs.userName.value.length >= 3 && userInputs.userPass.value.length >= 3 && !!userInputs.userEmail
-  userMinimumData ? submit.disabled = false : submit.disabled = true
+  const phoneBreaker = userPhone.split('')
+  const phoneValidation = userPhone.length === 13 && phoneBreaker[0] === '+' && phoneBreaker[1] === '5' && phoneBreaker[2] === '4'
+  if (phoneValidation) {
+    const validation = document.querySelector('#validation')
+    validation.classList.remove('text-red-500')
+    validation.classList.add('text-green-500')
+  } else {
+    const validation = document.querySelector('#validation')
+    validation.classList.add('text-red-500')
+    validation.classList.remove('text-green-500')
+  }
+
+  userMinimumData && phoneValidation ? submit.disabled = false : submit.disabled = true
 }
 
 for (let input in userInputs) {

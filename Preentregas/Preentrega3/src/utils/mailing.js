@@ -1,5 +1,7 @@
 const nodemailer = require("nodemailer");
 
+const logger = require('../utils/logger')
+
 const { G_MAIL, G_MAIL_PASS } = process.env
 
 const transporter = nodemailer.createTransport({
@@ -49,18 +51,20 @@ const mailOptionsPurchase = (emailBody, email, name) => {
 
 const sendMail = (newUser) => {
   transporter.sendMail(mailOptionsUser(newUser))
-    .then(res => {
-      console.log(res)
+    .then(data => {
+      const { accepted, rejected, response, envelope, messageId } = data
+      logger.info(`Register Mailing - accepted: ${accepted} - rejected: ${rejected} - response: ${response} - from: ${envelope.from} - to: ${envelope.to} - ID: ${messageId}`)
     })
-    .catch(err => console.log(err))
+    .catch(error => logger.error(error))
 }
 
 const sendMailPurchase = (emailBody, email, name) => {
   transporter.sendMail(mailOptionsPurchase(emailBody, email, name))
-    .then(res => {
-      console.log(res)
+    .then(data => {
+      const { accepted, rejected, response, envelope, messageId } = data
+      logger.info(`Purchase Mailing - accepted: ${accepted} - rejected: ${rejected} - response: ${response} - from: ${envelope.from} - to: ${envelope.to} - ID: ${messageId}`)
     })
-    .catch(err => console.log(err))
+    .catch(error => logger.error(error))
 }
 
 module.exports = {
