@@ -48,7 +48,7 @@ passport.serializeUser((user, callback) => {
 })
 
 passport.deserializeUser(async (user, callback) => {
-  const allUsers = await UsersDb.getAll()
+  const allUsers = [await UsersDb.getAll()]
   const foundUser = allUsers.find(entry => entry._id === user._id)
   callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
 })
