@@ -1,0 +1,12 @@
+<section class="grid flex-col justify-center items-center">
+  <h2 class="text-2xl font-bold italic underline text-center mb-3">User</h2>
+  <div class="grid grid-cols-2 grid-rows-5 mt-4">
+    <img class="w-36 h-36 rounded-full object-cover row-span-5 justify-self-center" src="{{user.avatarURL}}" alt="{{user.name}}">
+    <p><b>Nombre:</b> {{user.name}}</p>
+    <p><b>Dirección:</b> {{user.address}}</p>
+    <p><b>Edad:</b> {{user.age}}</p>
+    <p><b>Email:</b> {{user._id}}</p>
+    <p><b>Teléfono:</b> {{user.phone}}</p>
+  </div>
+  <button class="bg-blue-200 text-black font-bold rounded shadow-sm w-32 self-center cursor-pointer mt-8 mx-auto" id="empty" onclick="logout()">Logout</button>
+</section>

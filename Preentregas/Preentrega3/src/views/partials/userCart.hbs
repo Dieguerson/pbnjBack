@@ -1,0 +1,17 @@
+<section class="grid grid-cols-2 gap-3 mt-4 mb-8">
+  <h2 class="text-2xl font-bold italic underline text-center col-span-2">Carrito</h2>
+  
+  <button class="bg-blue-200 text-black font-bold rounded shadow-sm w-32 self-center cursor-pointer col-span-2 mx-auto" id="empty" onclick="emptyCart('{{cart._id}}')">Vaciar Carrito</button>
+
+  {{#each cart.products}}
+    <div class="border-2 border-black rounded flex flex-col items-center">
+      <h3 class="text-xl font-bold">{{this.name}}</h3>
+      <img class="w-10 h-10" src="{{this.thumbnail}}" alt="{{this.name}}">
+      <p><b>Price:</b> ${{this.price}}</p>
+      <p><b>Stock:</b> {{this.stock}}</p>
+      <button class="mb-2 bg-blue-200 text-black rounded shadow-sm w-auto p-1 mt-2 cart-btn" onclick="deleteProduct('{{this._id}}', '{{../cart._id}}')">Eliminar</button>
+    </div>
+  {{/each}}
+
+  <button class="bg-blue-200 text-black font-bold rounded shadow-sm w-32 self-center cursor-pointer col-span-2 mx-auto" id="empty" onclick="startOrder('{{cart._id}}')">Realizar Pedido</button>
+</section>
