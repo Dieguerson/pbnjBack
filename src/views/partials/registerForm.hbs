@@ -1,18 +1,19 @@
-<form class="flex flex-col border-4 border-blue-900 rounded-lg p-4 mt-3 mb-2" id="signIn">
+<form class="flex flex-col border-4 border-blue-900 rounded-lg p-4 mt-3 mb-2" id="signInForm">
   <h2 class="text-2xl font-bold text-blue-800 mb-4">Registrate!</h2>
   <label class="font-bold text-blue-500" for="userName">Nombre de Usuario</label>
   <input class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700" id="userName" type="text" name="userName">
-  <label class="font-bold text-blue-500" for="address">Dirección</label>
-  <input class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700" id="address" type="text" name="address">
-  <label class="font-bold text-blue-500" for="age">Age</label>
-  <input class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700" id="age" type="number" name="age">
-  <label class="font-bold text-blue-500" for="email">Email</label>
-  <input class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700" id="email" type="mail" name="email">
-  <label class="font-bold text-blue-500" for="phone">Número Telefónico</label>
-  <input class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700" id="phone" type="tel" name="phone">
-  <label class="font-bold text-blue-500" for="avatar">Avatar </label>
-  <input type="file" name="avatar" id="avatar">
-  <label class="font-bold text-blue-500" for="password">Contraseña</label>
-  <input class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700" id="password" type="password" name="password">
-  <input id="create" disabled class="disabled:border-gray-300 disabled:bg-gray-200/50 disabled:cursor-not-allowed disabled:shadow-none disabled:text-gray-500 border border-blue-300 rounded-md bg-blue-400 w-fit self-end mt-3 p-1 font-bold text-red-500 hover:shadow-md shadow-orange-400" type="submit" value="Enviar">
+  <label class="font-bold text-blue-500" for="userAddress">Dirección</label>
+  <input class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700" id="userAddress" type="text" name="address">
+  <label class="font-bold text-blue-500" for="userAge">Age</label>
+  <input class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700" id="userAge" type="number" name="age">
+  <label class="font-bold text-blue-500" for="userEmail">Email</label>
+  <input class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700" id="userEmail" type="mail" name="email">
+  <label class="font-bold text-blue-500" for="userPhone">Número Telefónico</label>
+  <input class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700" id="userPhone" type="tel" name="phone">
+  <p id="validation" class="ml-2 text-sm text-red-500">El número debe empezar con +54</p>
+  <label class="font-bold text-blue-500" for="userAvatar">Avatar </label>
+  <input type="file" name="avatar" id="userAvatar">
+  <label class="font-bold text-blue-500" for="userPass">Contraseña</label>
+  <input class="border-2 border-blue-300 rounded-md bg-blue-300/20 shadow-sm shadow-orange-400 text-blue-700" id="userPass" type="password" name="password">
+  <input id="submit" disabled class="disabled:border-gray-300 disabled:bg-gray-200/50 disabled:cursor-not-allowed disabled:shadow-none disabled:text-gray-500 border border-blue-300 rounded-md bg-blue-400 w-fit self-end mt-3 p-1 font-bold text-red-500 hover:shadow-md shadow-orange-400" type="submit" value="Enviar">
 </form>

@@ -1,35 +1,38 @@
 const express = require('express');
 const { Router } = express;
-const User = require('../daos/UserMongo')
-const Carrito = require('../daos/CarritoMongo')
 let router = new Router();
-const routes = require('../../routes')
-const sendMessage = require('../../messaging')
-const { sendMailPurchase } = require('../../mailing')
 
-const users = new User()
-const carrito = new Carrito()
+const User = require('../daos/UserMongo')
+const Cart = require('../daos/CartMongo')
+const UsersDb = new User()
+const CartDb = new Cart()
 
-router.get('/user/:email', async (req, res) => {
-  const { email } = req.params
-  const user = await users.getById(email)
-  const cart = await carrito.getById(user.cartId)
-  res.render("user", {script: '/scripts/user.js', cart: cart, user: user, routes: routes(req)})
+const routes = require('../utils/routes')
+
+const sendMessage = require('../utils/messaging')
+
+const { sendMailPurchase } = require('../utils/mailing')
+
+router.get('/usuario/:email', async (req, res) => {
+  if(req.session.passport){
+    const { email } = req.params
+    const userById = await UsersDb.getById(email)
+    const cartById = await CartDb.getById(userById.cartId)
+    res.render("user", {script: '/scripts/user.js', cart: cartById, user: userById, routes: routes(req)})
+  } else {
+    res.redirect(307, '/login')
+  }
 })
 
-router.post('/user/:email', (req, res) => {
-  res.status(200).send()
-})
-
-router.get('/user/buy/:cartId', async (req, res) => {
+router.get('/usuario/compra/:cartId', async (req, res) => {
   const { cartId } = req.params
   const { _id } = req.session.passport.user
-  const destinatary = await users.getById(_id)
-  const cart = await carrito.getById(cartId)
+  const userById = await UsersDb.getById(_id)
+  const cartById = await CartDb.getById(cartId)
   let productList = ''
   let adminList = ''
   let adminWaList = ''
-  cart.products.forEach(poke => {
+  cartById.products.forEach(poke => {
     productList += `
       Nombre: ${poke.name}
       Descripción: ${poke.description}
@@ -50,17 +53,17 @@ router.get('/user/buy/:cartId', async (req, res) => {
     `
   })
   const emailBody = `
-    <h1>El usuario ${destinatary.name + '<' + destinatary._id + '>'} ha iniciado un pedido de:</h1>
+    <h1>El usuario ${userById.name + '<' + userById._id + '>'} ha iniciado un pedido de:</h1>
     <section>
     ${adminList}
     </section>
   `
   const whatsappBody =`
-    El usuario ${destinatary.name} < ${destinatary._id} > ha iniciado un pedido de:
+    El usuario ${userById.name} < ${userById._id} > ha iniciado un pedido de:
     ${adminWaList}
   `
   const messageBody = `
-    Hola, ${destinatary.name}!
+    Hola, ${userById.name}!
 
     Nos comunicamos de PBnJ para contarte que se inició tu pedido de:
 
@@ -68,8 +71,9 @@ router.get('/user/buy/:cartId', async (req, res) => {
 
     En breve nos estaremos comunicando con vos por teléfono para completar la compra!
   `
-  sendMessage(whatsappBody, messageBody, destinatary.phone)
-  sendMailPurchase(emailBody, _id, destinatary.name)
+  sendMessage(whatsappBody, messageBody, userById.phone)
+  sendMailPurchase(emailBody, _id, userById.name)
   res.status(200).send() 
 })
+
 module.exports = router;

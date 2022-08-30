@@ -9,13 +9,13 @@ const routes = (req) => {
   if (!!req.session.passport) {
     routesArray.push({
       name: 'Usuario',
-      route: `/user/${req.session.passport.user._id}`
+      route: `/usuario/${req.session.passport.user._id}`
     })
   } else {
     routesArray.push(
       {
         name: 'Registro',
-        route: '/register'
+        route: '/registro'
       },
       {
         name: 'Login',

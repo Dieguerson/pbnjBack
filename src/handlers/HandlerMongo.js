@@ -1,9 +1,11 @@
-const config = require('../config');
-const mongoose = require('mongoose')
+const config = require('../config/config');
 
+const mongoose = require('mongoose')
 mongoose.connect(config.mongoDB.url, config.mongoDB.options)
 
-class ContenedorDB {
+const logger = require('../utils/logger')
+
+class HandlerMongo {
   constructor(collection, schema) {
     this.table = mongoose.model(collection, schema);
   };
@@ -12,15 +14,15 @@ class ContenedorDB {
     let db;
     let objectId;
     await this.table.create(object)
-      .then(async (res) => {
-        objectId = res._id
+      .then(async (response) => {
+        objectId = response._id
         await this.table.find()
           .then((data) => {
             db = data;
           })
-          .catch(err => console.log(err));
+          .catch(error => logger.error(error));
       })
-      .catch(err => console.log(err));
+      .catch(error => logger.error(error));
 
     return objectId;
   };
@@ -34,9 +36,9 @@ class ContenedorDB {
           .then((data) => {
             db = data;
           })
-          .catch(err => console.log(err));
+          .catch(error => logger.error(error));
       })
-      .catch(err => console.log(err));
+      .catch(error => logger.error(error));
 
     return db;
   };
@@ -48,7 +50,7 @@ class ContenedorDB {
       .then((data) => {
         byId = data;
       })
-      .catch(err => console.log(err));
+      .catch(error => logger.error(error));
 
     return byId[0];
   }
@@ -63,7 +65,7 @@ class ContenedorDB {
           return a.code - b.code
         })
       })
-      .catch(err => console.log(err));
+      .catch(error => logger.error(error));
 
     return db;
   }
@@ -77,9 +79,9 @@ class ContenedorDB {
           .then((data) => {
             db = data;
           })
-          .catch(err => console.log(err));
+          .catch(error => logger.error(error));
       })
-      .catch(err => console.log(err));
+      .catch(error => logger.error(error));
 
     return db;
   }
@@ -93,12 +95,12 @@ class ContenedorDB {
           .then((data) => {
             db = data;
           })
-          .catch(err => console.log(err));
+          .catch(error => logger.error(error));
       })
-      .catch(err => console.log(err));
+      .catch(error => logger.error(error));
 
     return db;
   }
 }
 
-module.exports = ContenedorDB;
+module.exports = HandlerMongo;

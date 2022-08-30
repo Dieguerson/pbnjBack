@@ -1,8 +1,10 @@
 const express = require('express');
 const { Router } = express;
-const passport = require('../../passport')
 let router = new Router();
-const routes = require('../../routes')
+
+const passport = require('../utils/passport')
+
+const routes = require('../utils/routes')
 
 router.use(express.json())
 
@@ -10,15 +12,12 @@ router.get('/login', (req, res) => {
   res.render("login", {script: '/scripts/login.js', routes: routes(req)})
 })
 
-router.post('/login', passport.authenticate('auth'), (req, res) => {
-  console.log(req.session)
+router.post('/login', passport.authenticate('auth'), (_, res) => {
   res.status(200).send()
 })
 
-router.get('/logout', (req, res) => {
-  console.log(req.session)
+router.get('/salir', (req, res) => {
   req.session.destroy()
-  console.log(req.session)
   res.status(200).send()
 })
 

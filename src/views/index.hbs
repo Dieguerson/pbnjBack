@@ -1,28 +1,5 @@
 <section class="flex flex-col items-center">
   <h1 class="text-2xl font-bold italic underline text-center">Carga de Productos</h1>
-
-  <article id="products" class="grid grid-cols-2 gap-3 mt-4"></article>
-
-  <form action="/api/productos/admin" method="POST" id="form" class="flex flex-col w-60 mx-auto items-center block">
-    <label class="mt-3 self-start" for="name">Nombre</label>
-    <input disabled class="border-2 rounded border-black w-full disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed" id="name" type="text" name="name">
-    <label class="mt-3 self-start" for="description">Descripción</label>
-    <textarea disabled class="border-2 rounded border-black w-full disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed" id="description" name="description"  cols="2" rows="3"></textarea>
-    <label class="mt-3 self-start" for="code">Código</label>
-    <input disabled class="border-2 rounded border-black w-full disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed" id="code" type="number" name="code" min="0" step="0.01">
-    <label class="mt-3 self-start" for="thumbnail">Thumbnail</label>
-    <input disabled class="border-2 rounded border-black w-full disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed" id="thumbnail" type="text"name="thumbnail">
-    <label class="mt-3 self-start" for="price">Price</label>
-    <input disabled class="border-2 rounded border-black w-full disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed" id="price" type="number" name="price" min="0" step="0.01">
-    <label class="mt-3 self-start" for="stock">Stock</label>
-    <input disabled class="border-2 rounded border-black w-full disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed" id="stock" type="number" name="stock" min="0" step="0.01">
-    <input disabled class="bg-blue-200 text-black rounded shadow-sm w-20 mt-5 self-end disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed block" id="submit" type="submit" value="Enviar">
-    <button class="bg-blue-200 text-black rounded shadow-sm w-20 mt-5 self-end hidden" id="update">
-      Actualizar
-    </button>
-  </form>
-
-  <button onclick="administrate()" id="login" class="bg-blue-500 text-black rounded shadow-sm w-28 mt-5 self-end block mx-auto">Log as Admin</button>
-  
-  <button onclick="administrate()" id="logout" class="bg-blue-500 text-black rounded shadow-sm w-28 mt-5 self-end hidden mx-auto">Logout</button>
+  {{>productList}}
+  {{>productForm}}
 </section>

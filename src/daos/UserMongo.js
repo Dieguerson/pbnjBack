@@ -1,10 +1,10 @@
-const ContenedorMongo = require('../Contenedor/ContenedorMongo')
+const HandlerMongo = require('../handlers/HandlerMongo')
 const User = require('../models/User')
 
-class UsuariosMongo extends ContenedorMongo {
+class UserMongo extends HandlerMongo {
   constructor() {
     super('users', User)
   }
 }
 
-module.exports = UsuariosMongo
+module.exports = UserMongo
