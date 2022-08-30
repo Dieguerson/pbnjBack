@@ -32,7 +32,7 @@ if (cluster.isMaster && MODE === 'CLUSTER') {
     cluster.fork()
   }
 
-  cluster.on('exit', (worker) => {
+  cluster.on('exit', (_) => {
     console.log(`Worker ${pid}`)
   })
 } else {
