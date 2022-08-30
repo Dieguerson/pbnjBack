@@ -1,17 +1,19 @@
 const express = require('express');
 const { Router } = express;
-const passport = require('../../passport')
-const User = require('../daos/UserMongo')
-const Carrito = require('../daos/CarritoMongo')
 let router = new Router();
-const routes = require('../../routes')
-const sendMail = require('../../mailing')
 
-const users = new User()
-const carrito = new Carrito()
+const User = require('../daos/UserMongo')
+const Cart = require('../daos/CartMongo')
+const UsersDb = new User()
+const CartDb = new Cart()
+
+const passport = require('../utils/passport')
+
+const sendMail = require('../utils/mailing')
+
+const routes = require('../utils/routes')
 
 const multer = require('multer');
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/avatars")
@@ -21,7 +23,6 @@ const storage = multer.diskStorage({
     cb(null, "avatar_" + userName + "_" + file.originalname)
   }
 })
-
 const upload = multer({storage: storage})
 
 const pathFormatter = (path) => {
@@ -32,11 +33,11 @@ const pathFormatter = (path) => {
   return `/${reform}`
 }
 
-router.get('/register', (req, res) => {
+router.get('/registro', (req, res) => {
   res.render("register", {script: '/scripts/register.js', routes: routes(req)})
 })
 
-router.post('/register', [upload.single("avatar"), passport.authenticate('register')], async (req, res) => {
+router.post('/registro', [upload.single("avatar"), passport.authenticate('register')], async (req, res) => {
   const {
     name,
     address,
@@ -49,7 +50,7 @@ router.post('/register', [upload.single("avatar"), passport.authenticate('regist
     email,
     products: []
   };
-  const userCart = await carrito.save(newCart)
+  const userCart = await CartDb.save(newCart)
   const file = req.file
   const newUser = {
     name,
@@ -61,7 +62,7 @@ router.post('/register', [upload.single("avatar"), passport.authenticate('regist
     cartId: userCart,
     avatarURL: pathFormatter(file.path)
   }
-  await users.save(newUser)
+  await UsersDb.save(newUser)
   sendMail(newUser)
   res.status(200).send()
 })

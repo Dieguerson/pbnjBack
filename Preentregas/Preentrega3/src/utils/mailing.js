@@ -35,7 +35,6 @@ const mailOptionsUser = (newUser) => {
 }
 
 const mailOptionsPurchase = (emailBody, email, name) => {
-
   return {
     from: 'PBnJ <pbnj@pbnj.com>',
     to: email,

@@ -1,52 +1,61 @@
-const loginForm = document.querySelector('#login')
+const logForm = document.querySelector('#logForm')
 const userInputs = {
-  userEmail: document.querySelector('#email'),
-  userPass: document.querySelector('#password')
+  userEmail: document.querySelector('#userEmail'),
+  userPass: document.querySelector('#userPass')
 }
-const login = document.querySelector('#submit')
+const submit = document.querySelector('#submit')
 
-const enable = () => {
+const enableLogin = () => {
   const userMinimumData = userInputs.userPass.value.length >= 3 && !!userInputs.userEmail
-  userMinimumData ? login.disabled = false : login.disabled = true
+  userMinimumData ? submit.disabled = false : submit.disabled = true
 }
 
 for (let input in userInputs) {
-  userInputs[input].addEventListener('input', enable)
+  userInputs[input].addEventListener('input', enableLogin)
 }
 
-loginForm.addEventListener('submit', async (e) => {
-  e.preventDefault()
-  const userLogin = {
-    userEmail: userInputs.userEmail.value,
-    userPass: userInputs.userPass.value
-  }
-  await fetch('/login', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify(userLogin)
-  })
-    .then(res => {
-      if (res.status === 200) {
-        const userLogged = document.querySelector('#logged')
-        userLogged.innerHTML = `
-          <p>El usuario <b>${userInputs.userEmail.value}</b> ha ingresado!</p>
-        `
-        userLogged.classList.toggle('hidden')
-        userLogged.classList.toggle('block')
+logForm.addEventListener('submit', async (event) => {
+  event.preventDefault()
 
-        window.location.href = `user/${userLogin.userEmail}`
-      } else {
-        const logError = document.querySelector('#error')
-        logError.innerHTML = `
-          <p>El usuario <b>${userInputs.userEmail.value}</b> no puede ingresar.</p>
-        `
-        logError.classList.toggle('hidden')
-        logError.classList.toggle('block')
-        setTimeout(()=>{
-          logError.classList.toggle('hidden')
-          logError.classList.toggle('flex')
-        }, 2000)
-      }
+  const userEmail = userInputs.userEmail.value
+  const userPass = userInputs.userPass.value
+
+  const userLogin = {
+    userEmail,
+    userPass
+  }
+
+  try {
+    await fetch('/login', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(userLogin)
     })
-    .catch(err => console.error(err))
+      .then(response => {
+        if (response.status === 200) {
+          const logSuccess = document.querySelector('#logSuccess')
+          logSuccess.innerHTML = `
+            <p>El usuario <b>${userInputs.userEmail.value}</b> ha ingresponseado!</p>
+          `
+          logSuccess.classList.toggle('hidden')
+          logSuccess.classList.toggle('block')
+  
+          window.location.href = `usuario/${userLogin.userEmail}`
+        } else {
+          const logError = document.querySelector('#logError')
+          logError.innerHTML = `
+            <p>El usuario o la contraseña son incorrectos.</p>
+          `
+          logError.classList.toggle('hidden')
+          logError.classList.toggle('block')
+
+          setTimeout(()=>{
+            logError.classList.toggle('hidden')
+            logError.classList.toggle('flex')
+          }, 2000)
+        }
+      })
+  } catch(error) {
+    console.error(err)
+  }
 })

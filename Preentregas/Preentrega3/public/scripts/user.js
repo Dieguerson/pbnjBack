@@ -4,7 +4,7 @@ const emptyCart = (id) => {
 }
 
 const startOrder = (cartId) => {
-  fetch(`/user/buy/${cartId}`)
+  fetch(`/usuario/compra/${cartId}`)
 }
 
 const deleteProduct = (id, cartId) => {
@@ -12,7 +12,7 @@ const deleteProduct = (id, cartId) => {
 }
 
 const logout = () => {
-  fetch('/logout')
+  fetch('/salir')
     .then(res => {
       if (res.status === 200) {
         window.location.href = "/"

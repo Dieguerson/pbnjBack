@@ -1,27 +1,32 @@
 let pokeDb;
 
-fetch('/api/productos')
-  .then(res => res.json())
+try {
+  fetch('/api/productos')
+  .then(response => response.json())
     .then(data => {
       pokeDb = data;
-      const list = document.querySelector("#products")
+      const products = document.querySelector("#products")
       let newPoke = ""
       data.forEach(poke => {
         newPoke += `
           <div class="border-2 border-black rounded flex flex-col items-center p-2">
             <h3 class="text-xl font-bold capitalize">${poke.name}</h3>
-            <img class="w-10 h-10" src="${poke.thumbnail || poke.sprite}" alt="${poke.name}">
+            <img class="w-10 h-10" src="${poke.thumbnail}" alt="${poke.name}">
             <p><b>Price:</b> $${poke.price}</p>
             <p><b>Stock:</b> ${poke.stock}</p>
-            <p><b>ID del Producto:</b> ${poke.id || poke._id}</p>
-            <button disabled class="mb-2 bg-blue-200 text-black rounded shadow-sm w-auto p-1 mt-2 disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed admin-btn" onclick="killPoke(${typeof poke.id === 'string' ? "'" + poke.id + "'" : poke.id || "'" + poke._id + "'"})">Eliminar</button>
-            <button disabled class="mb-2 bg-red-200 text-black rounded shadow-sm w-auto p-1 mt-2 disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed admin-btn" onclick="updatePoke(${typeof poke.id === 'string' ? "'" + poke.id + "'" : poke.id || "'" + poke._id + "'"})">Actualizar</button>
+            <p><b>ID del Producto:</b> ${poke._id}</p>
+            <button disabled class="mb-2 bg-blue-200 text-black rounded shadow-sm w-auto p-1 mt-2 disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed admin-btn" onclick="killPoke(${"'" + poke._id + "'"})">Eliminar</button>
+            <button disabled class="mb-2 bg-red-200 text-black rounded shadow-sm w-auto p-1 mt-2 disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed admin-btn" onclick="updatePoke(${"'" + poke._id + "'"})">Actualizar</button>
             <button class="mb-2 bg-red-200 text-black rounded shadow-sm w-auto p-1 mt-2 disabled:text-gray-500 disabled:bg-gray-300 disabled:cursor-not-allowed admin-btn" onclick="addToCart(${"'" + poke._id + "'"})">Añadir a Carrito</button>
           </div>
         `
       })
-      list.innerHTML = newPoke
+      products.innerHTML = newPoke
     })
+} catch (error) {
+  console.error(error)
+}
+
     
 const administrate = () => {
   document.querySelector("#name").disabled = !document.querySelector("#name").disabled
@@ -36,13 +41,13 @@ const administrate = () => {
     button.disabled = !button.disabled
   })
 
-  const login = document.querySelector("#login");
-  const logout = document.querySelector("#logout");
+  const adminFakeIn = document.querySelector("#adminFakeIn");
+  const adminFakeOut = document.querySelector("#adminFakeOut");
 
-  login.classList.toggle("hidden");
-  login.classList.toggle("block");
-  logout.classList.toggle("hidden");
-  logout.classList.toggle("block");
+  adminFakeIn.classList.toggle("hidden");
+  adminFakeIn.classList.toggle("block");
+  adminFakeOut.classList.toggle("hidden");
+  adminFakeOut.classList.toggle("block");
 }
 
 const killPoke = (id) => {
@@ -52,7 +57,7 @@ const killPoke = (id) => {
 let externalId
 
 const updatePoke = (id) => {
-  const toModify = pokeDb.find(poke => poke.id === id || poke._id === id)
+  const toModify = pokeDb.find(poke => poke._id === id)
   externalId = id
 
   document.querySelector("#name").value = toModify.name
@@ -67,21 +72,20 @@ const updatePoke = (id) => {
   document.querySelector("#update").classList.toggle("hidden")
 }
 
-document.querySelector('#update').addEventListener('click', (e) => {
-  e.preventDefault();
+document.querySelector('#update').addEventListener('click', (event) => {
+  event.preventDefault();
   const name = document.querySelector("#name").value
   const code = document.querySelector("#code").value
   const description = document.querySelector("#description").value
   const thumbnail = document.querySelector("#thumbnail").value
   const price = document.querySelector("#price").value
   const stock = document.querySelector("#stock").value
-  const toModify = pokeDb.find(poke => poke.id === externalId || poke._id === externalId)
+  const toModify = pokeDb.find(poke => poke._id === externalId)
   const obj = {name: name, code: code, description: description, thumbnail: thumbnail, price: price, stock: stock}
-  fetch(`api/productos/admin/${toModify.id || toModify._id}`, {method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(obj) })
+  fetch(`api/productos/admin/${toModify._id}`, {method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(obj) })
 })
 
 const addToCart = (id) => {
-  console.log(id)
   fetch('/api/carrito/productos', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
