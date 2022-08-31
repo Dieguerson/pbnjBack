@@ -56,9 +56,10 @@ passport.deserializeUser(async (user, callback) => {
   users()
     .then(response => {
       console.log("RES", response)
+      const foundUser = response.find(entry => entry._id === user._id)
+      callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
     })
-  //foundUser = foundUsers.find(entry => entry._id === user._id)
-  callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
+    .catch(error => logger.error(error))
 })
 
 module.exports = passport;
