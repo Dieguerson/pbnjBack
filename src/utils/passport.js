@@ -53,13 +53,16 @@ passport.serializeUser((user, callback) => {
 })
 
 passport.deserializeUser(async (user, callback) => {
+  let foundUser
   users()
     .then(response => {
-      console.log("RES", response)
-      const foundUser = response.find(entry => entry._id === user._id)
-      callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
+      foundUser = response.find(entry => entry._id === user._id)
+      console.log("RES", foundUser)
     })
     .catch(error => logger.error(error))
+    .finally(() => {
+      callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
+    })
 })
 
 module.exports = passport;
