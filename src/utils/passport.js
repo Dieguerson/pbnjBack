@@ -5,6 +5,11 @@ const User = require('../daos/UserMongo')
 const logger = require('./logger')
 
 const UsersDb = new User()
+let allUsers
+(async () => {
+  allUsers = [await UsersDb.getAll()]
+  }
+)
 
 passport.use('register', new LocalStrategy(
   {
@@ -48,7 +53,6 @@ passport.serializeUser((user, callback) => {
 })
 
 passport.deserializeUser(async (user, callback) => {
-  const allUsers = [await UsersDb.getAll()]
   const foundUser = allUsers.find(entry => entry._id === user._id)
   callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
 })
