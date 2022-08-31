@@ -14,6 +14,7 @@ const sendMessage = require('../utils/messaging')
 const { sendMailPurchase } = require('../utils/mailing')
 
 router.get('/usuario/:email', async (req, res) => {
+  console.log(req.session)
   if(req.session.passport){
     const { email } = req.params
     const userById = await UsersDb.getById(email)
