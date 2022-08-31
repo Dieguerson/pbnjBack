@@ -52,12 +52,12 @@ passport.deserializeUser(async (user, callback) => {
   let foundUser
   try {
     allUsersExternal = await UsersDb.getAll()
-  } then {
+  } catch (error) {
+    logger.error(error)
+  } finally {
     foundUser = allUsersExternal.find(entry => entry._id === user._id)
     console.log(allUsersExternal)
     callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
-  } catch (error) {
-    logger.error(error)
   }
 })
 
