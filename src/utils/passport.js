@@ -5,7 +5,7 @@ const User = require('../daos/UserMongo')
 const logger = require('./logger')
 
 const UsersDb = new User()
-let allUsers
+let allUsersExternal
 
 passport.use('register', new LocalStrategy(
   {
@@ -51,9 +51,10 @@ passport.serializeUser((user, callback) => {
 passport.deserializeUser(async (user, callback) => {
   let foundUser
   try {
-    allUsers = await UsersDb.getAll()
+    allUsersExternal = await UsersDb.getAll()
   } then {
-    foundUser = allUsers.find(entry => entry._id === user._id)
+    foundUser = allUsersExternal.find(entry => entry._id === user._id)
+    console.log(allUsersExternal)
     callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
   } catch (error) {
     logger.error(error)
