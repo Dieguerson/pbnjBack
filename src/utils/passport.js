@@ -52,7 +52,7 @@ passport.serializeUser((user, callback) => {
 
 passport.deserializeUser((user, callback) => {
   foundUser = allUsersExternal.find(entry => entry._id === user._id)
-  console.log('FOUND', foundUser)
+  console.log('FOUND', allUsersExternal)
   callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
 })
 
