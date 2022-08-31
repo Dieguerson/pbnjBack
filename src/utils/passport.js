@@ -9,7 +9,7 @@ let allUsers
 (async () => {
   allUsers = [await UsersDb.getAll()]
   }
-)
+)()
 
 passport.use('register', new LocalStrategy(
   {
