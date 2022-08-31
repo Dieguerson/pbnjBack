@@ -53,15 +53,14 @@ passport.serializeUser((user, callback) => {
 })
 
 passport.deserializeUser(async (user, callback) => {
-  let foundUser
+  let foundUser = []
   users()
     .then(response => {
       foundUser = response.find(entry => entry._id === user._id)
+      if (foundUser !== []) {
+        callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
+      }
       console.log("RES", foundUser)
-    })
-    .catch(error => logger.error(error))
-    .finally(() => {
-      callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
     })
 })
 
