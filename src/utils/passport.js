@@ -8,6 +8,7 @@ const UsersDb = new User()
 let allUsers
 (async () => {
   allUsers = [await UsersDb.getAll()]
+  console.log(allUsers)
   }
 )()
 
