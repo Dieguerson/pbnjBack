@@ -8,7 +8,7 @@ const UsersDb = new User()
 let allUsersExternal
 
 const getAll = async () => {
-  allUsersExternal = await UsersDb.getAll())
+  allUsersExternal = await UsersDb.getAll()
 }
 
 getAll()
