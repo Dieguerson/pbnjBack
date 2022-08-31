@@ -6,11 +6,6 @@ const logger = require('./logger')
 
 const UsersDb = new User()
 let allUsers
-(async () => {
-  allUsers = await UsersDb.getAll()
-  console.log(allUsers)
-  }
-)()
 
 passport.use('register', new LocalStrategy(
   {
@@ -19,7 +14,7 @@ passport.use('register', new LocalStrategy(
     passReqToCallback: true
   },
   async (req, userEmail, userPass, done) => {
-    allUsers = await UsersDb.getAll()
+    const allUsers = await UsersDb.getAll()
     const existance = allUsers.find(user => user._id === userEmail)
     if (existance) return logger.warn(`Intento de creación de usuario con email ya existente ${'<' + userEmail + '>'}`)
     if (existance) return done(new Error('Ya Existe'))
@@ -42,7 +37,7 @@ passport.use('auth', new LocalStrategy(
     passwordField: 'userPass',
   },
   async (userEmail, userPass, done) => {
-    allUsers = await UsersDb.getAll()
+    const allUsers = await UsersDb.getAll()
     const user = allUsers.find(user => user._id === userEmail)
     if (!user || !bcrypt.compareSync(userPass, user.pass)) return logger.warn(`Email inexistente o pass incorrecta`)
     if (!user || !bcrypt.compareSync(userPass, user.pass)) return done(new Error('Email inexistente o pass incorrecta'))
@@ -54,8 +49,15 @@ passport.serializeUser((user, callback) => {
 })
 
 passport.deserializeUser(async (user, callback) => {
-  const foundUser = allUsers.find(entry => entry._id === user._id)
-  callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
+  let foundUser
+  try {
+    allUsers = await UsersDb.getAll()
+  } then {
+    foundUser = allUsers.find(entry => entry._id === user._id)
+    callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
+  } catch (error) {
+    logger.error(error)
+  }
 })
 
 module.exports = passport;
