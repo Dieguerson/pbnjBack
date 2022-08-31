@@ -7,6 +7,11 @@ const logger = require('./logger')
 const UsersDb = new User()
 let allUsersExternal
 
+test = () => {
+  console.log(await UsersDb.getAll()
+}
+test()
+
 passport.use('register', new LocalStrategy(
   {
     usernameField: 'userEmail',
