@@ -7,7 +7,7 @@ const logger = require('./logger')
 const UsersDb = new User()
 let allUsersExternal
 
-const test = () => {
+const test = async () => {
   console.log(await UsersDb.getAll())
 }
 test()
