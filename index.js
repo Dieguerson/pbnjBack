@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser');
 
 const session = require('express-session')
 
-const passport = require('./src/utils/passport')
+const { passport } = require('./src/utils/passport')
 
 const routes = require('./src/utils/routes')
 
