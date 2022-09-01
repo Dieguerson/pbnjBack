@@ -59,7 +59,7 @@ passport.serializeUser(async (user, callback) => {
 passport.deserializeUser(async (user, callback) => {
   await populateAll()
   const foundUser = allUsers.find(entry => entry._id === user._id)
-  callback(null, {_id: foundUser._id, cartId: foundUser.cartId})
+  callback(null, {_id: foundUser?._id, cartId: foundUser?.cartId})
 })
 
 module.exports = {
