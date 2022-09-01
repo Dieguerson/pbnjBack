@@ -1,3 +1,5 @@
+const logger = require("../../src/utils/logger")
+
 const emptyCart = (id) => {
   fetch(`/api/carrito/${id}`, {method: "DELETE"})
   return false
@@ -13,10 +15,10 @@ const deleteProduct = (id, cartId) => {
 
 const logout = () => {
   fetch('/salir')
-    .then(res => {
-      if (res.status === 200) {
+    .then(response => {
+      if (response.status === 200) {
         window.location.href = "/"
       }
     })
-    .catch(err => console.log(err))
+    .catch(error => console.error(error))
 }

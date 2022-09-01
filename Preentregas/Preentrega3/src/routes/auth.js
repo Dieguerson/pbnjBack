@@ -2,7 +2,7 @@ const express = require('express');
 const { Router } = express;
 let router = new Router();
 
-const passport = require('../utils/passport')
+const { passport } = require('../utils/passport')
 
 const routes = require('../utils/routes')
 

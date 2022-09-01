@@ -7,7 +7,7 @@ const Cart = require('../daos/CartMongo')
 const UsersDb = new User()
 const CartDb = new Cart()
 
-const passport = require('../utils/passport')
+const { passport, populate } = require('../utils/passport')
 
 const { sendMail } = require('../utils/mailing')
 
@@ -63,6 +63,7 @@ router.post('/registro', [upload.single("avatar"), passport.authenticate('regist
     avatarURL: pathFormatter(file.path)
   }
   await UsersDb.save(newUser)
+  await populate()
   sendMail(newUser)
   res.status(200).send()
 })

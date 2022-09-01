@@ -35,7 +35,7 @@ logForm.addEventListener('submit', async (event) => {
         if (response.status === 200) {
           const logSuccess = document.querySelector('#logSuccess')
           logSuccess.innerHTML = `
-            <p>El usuario <b>${userInputs.userEmail.value}</b> ha ingresponseado!</p>
+            <p>El usuario <b>${userInputs.userEmail.value}</b> ha ingresado!</p>
           `
           logSuccess.classList.toggle('hidden')
           logSuccess.classList.toggle('block')
