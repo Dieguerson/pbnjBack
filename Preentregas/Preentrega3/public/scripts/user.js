@@ -1,5 +1,3 @@
-const logger = require("../../src/utils/logger")
-
 const emptyCart = (id) => {
   fetch(`/api/carrito/${id}`, {method: "DELETE"})
   return false
