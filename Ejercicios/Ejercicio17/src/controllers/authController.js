@@ -1,8 +1,7 @@
-//const ContenedorMongo = require('../db/ContenedorMongo');
-//const User = require('../models/User')
-//const userDb = new ContenedorMongo('usersProductronica', User)
-const UsersFirebase = require('../db/daos/Firebase/UsersFirebase')
-const userDb = new UsersFirebase()
+const UsersDto = require('../db/dtos/UsersDto')
+const FirebaseDaoFactory = require('../db/daos/Firebase/FirebaseDaoFactory')
+const FireFactory = new FirebaseDaoFactory()
+const userDb = FireFactory.getDao('users')
 
 const fetchUsers = async () => {
   try {
@@ -13,8 +12,9 @@ const fetchUsers = async () => {
 }
 
 const saveNewUser = async (newUser) => {
+  const plainUser = new UsersDto(newUser)
   try {
-    await userDb.save(newUser)
+    await userDb.save(plainUser)
   } catch (error) {
     logger.error({error})
   }

@@ -1,10 +1,10 @@
 const socket = io();
 let db = [];
 
-const authorSchema = new normalizr.schema.Entity('author', {}, {idAttribute: 'email'})
-const messageSchema = new normalizr.schema.Entity('message', {
-  author: authorSchema
-}, {idAttribute: 'innerId'})
+// const authorSchema = new normalizr.schema.Entity('author', {}, {idAttribute: 'email'})
+// const messageSchema = new normalizr.schema.Entity('message', {
+//   author: authorSchema
+// }, {idAttribute: 'innerId'})
 
 socket.on('OpenS', (data) => {
   socket.emit('OpenC', 'Client Escuchando');
@@ -45,8 +45,9 @@ const mRender = (normalizedMessages) => {
   let messages = []
   
   normalizedMessages.forEach(msg => {
-    const abnormalMessage = normalizr.denormalize(msg.result, messageSchema, msg.entities)
-    messages.push(abnormalMessage)
+    //const abnormalMessage = normalizr.denormalize(msg.result, messageSchema, msg.entities)
+    //messages.push(abnormalMessage)
+    messages.push(msg)
   })
 
   const normalSize = JSON.stringify(normalizedMessages).length

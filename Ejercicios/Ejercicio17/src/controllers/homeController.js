@@ -1,17 +1,16 @@
 const moment = require('moment');
 const logger = require('../utils/logger')
+const ProductsDto = require('../db/dtos/ProductsDto')
+const MessagesDto = require('../db/dtos/MessagesDto')
+const FirebaseDaoFactory = require('../db/daos/Firebase/FirebaseDaoFactory')
+const FireFactory = new FirebaseDaoFactory()
 
-// const Contenedor = require('../db/ContenedorDB');
-// const productsDb = new Contenedor('products')
+const productsDb = FireFactory.getDao('products')
+const productsDb2 = FireFactory.getDao('products')
 
-// const ContenedorFirebase = require('../db/ContenedorDBFirebase');
-// const messageDb = new ContenedorFirebase('messages')
+console.log('Igualdad de DBs', productsDb === productsDb2)
 
-const ProductsFirebase = require('../db/daos/Firebase/ProductsFirebase')
-const productsDb = new ProductsFirebase()
-
-const MessagesFirebase = require('../db/daos/Firebase/MessagesFirebase')
-const messageDb = new MessagesFirebase()
+const messageDb = FireFactory.getDao('messages')
 
 const fetchProducts = async () => {
   try {
@@ -22,10 +21,11 @@ const fetchProducts = async () => {
 }
 
 const saveNewProduct = async (newProduct) => {
+  const plainProduct = new ProductsDto(newProduct)
   try {
-    await productsDb.save(newProduct);
+    await productsDb.save(plainProduct);
   } catch (error) {
-    logger.error({error})
+    logger.error(error)
   }
 }
 
@@ -33,7 +33,7 @@ const fetchMessages = async () => {
   try {
     const messages = await messageDb.getAll();
     const orderedMessages = messages.sort((a, b) => {
-      return a.result - b.result
+      return a.innerId - b.innerId
     })
     return orderedMessages;
   } catch (error) {
@@ -43,11 +43,12 @@ const fetchMessages = async () => {
 
 const saveNewMessage = async (newMessage) => {
   newMessage.date = moment().format('DD/MM/YYYY, HH:MM:SS');
+  const plainMessage = new MessagesDto(newMessage)
   try {
-    await messageDb.save(newMessage);
+    await messageDb.save(plainMessage);
   } catch (error) {
     logger.error({error})
   }
 }
 
-module.exports = { fetchProducts, fetchMessages, saveNewProduct, saveNewMessage}
+module.exports = { fetchProducts, fetchMessages, saveNewProduct, saveNewMessage, productsDb}

@@ -1,20 +1,12 @@
 const admin = require('firebase-admin');
 const config = require('../../config/config')
 
-const normalizr = require('normalizr')
-
 admin.initializeApp({
   credential: admin.credential.cert(config.firebase),
   databaseURL: "https://pbnj-d2e44-default-rtdb.firebaseio.com"
 })
 
 const db = admin.firestore()
-
-// const authorSchema = new normalizr.schema.Entity('author', {}, {idAttribute: 'email'})
-// const messageSchema = new normalizr.schema.Entity('message', {
-//   author: authorSchema
-// }, {idAttribute: 'innerId'})
-
 class ContenedorDB {
   constructor(collection) {
     this.collection = db.collection(collection);
@@ -32,27 +24,23 @@ class ContenedorDB {
 
     if (dbExists) {
       sortedDb = currentDb.sort((a , b) => {
-        const keyA = Object.keys(a.entities.message)[0]
-        const keyB = Object.keys(b.entities.message)[0]
-        return a.entities.message[keyA].innerId - b.entities.message[keyB].innerId
+        return a.innerId - b.innerId
       })
     } else {
       sortedDb = currentDb
     }
 
-    const lastKey = dbExists ? Object.keys(sortedDb[sortedDb.length - 1]?.entities.message)[0] : 0
-    const lastInnerId = sortedDb[sortedDb.length - 1]?.entities.message[lastKey].innerId
+    const lastInnerId = sortedDb[sortedDb.length - 1]?.innerId
+
 
     object.innerId = lastInnerId ? lastInnerId + 1 : 1
-
-    const normalized = normalizr.normalize(object, messageSchema)
-
-    await this.collection.add(normalized)
+    
+    await this.collection.add({...object})
       .then(async ({id}) => {
         await this.collection.doc(id).update({id: id})
         const created = await this.collection.doc(id).get()
         toReturn = {...created.data()}
-      })
+      }).catch(error => console.log('aqui', error))
 
     return toReturn;
   };

@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+
 const yargs = require('yargs/yargs')
 const args = process.argv.slice(2)
 const yargedArgs = yargs(args).default({ PORT: 8080, DATABASE: 'FIREBASE' }).alias({ p: 'PORT', db: 'DATABASE' }).argv
@@ -69,17 +70,17 @@ app.use(session(
       _expires: 7 * 24 * 60 * 60 * 1000
     }
   }
-))
-app.use(passport.initialize())
-app.use(passport.session())
-
-app.use(home)
-app.use(auth)
-app.use(infoView)
-app.use('/api', fake)
-app.use('/api', randoms);
-app.use(catcher);
-
-server.listen(PORT, () => {
-  console.info(`Server Arriba en ${PORT}`);
-});
+  ))
+  app.use(passport.initialize())
+  app.use(passport.session())
+  
+  app.use(home)
+  app.use(auth)
+  app.use(infoView)
+  app.use('/api', fake)
+  app.use('/api', randoms);
+  app.use(catcher);
+  
+  server.listen(PORT, () => {
+    console.info(`Server Arriba en ${PORT}`);
+  });

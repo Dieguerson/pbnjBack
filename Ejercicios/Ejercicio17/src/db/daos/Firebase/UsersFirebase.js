@@ -1,9 +1,17 @@
 const ContenedorFirebase = require('./ContenedorDBFirebase')
 
-class usersFirebase extends ContenedorFirebase {
+class UsersFirebase extends ContenedorFirebase {
   constructor() {
     super('usersProductronica')
   }
+
+  static getInstance() {
+    if (!UsersFirebase.instance) {
+      UsersFirebase.instance = new UsersFirebase()
+    }
+
+    return UsersFirebase.instance
+  }
 }
 
-module.exports = usersFirebase
+module.exports = UsersFirebase

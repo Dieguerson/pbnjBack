@@ -30,9 +30,12 @@ const ioConnection = (server) => {
 
     socket.emit('messages', messages);
     socket.on('newMessage', async (data) => {
-      messages = await saveNewMessage(data)
+      // messages = await saveNewMessage(data)
+      await saveNewMessage(data)
+      messages = await fetchMessages()
       messages.sort((a, b) => {
-        return a.result - b.result
+        // return a.result - b.result
+        return a.innerId - b.innerId
       })
       io.sockets.emit('messages', messages);
     });
