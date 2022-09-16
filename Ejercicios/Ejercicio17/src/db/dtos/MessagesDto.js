@@ -9,6 +9,7 @@ class MessagesDto {
       name: message.author.name,
     }
     this.date = message.date
+    this.rawDate = message.rawDate
     this.text = message.text
   }
 }

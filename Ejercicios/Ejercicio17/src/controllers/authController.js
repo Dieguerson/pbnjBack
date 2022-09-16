@@ -1,20 +1,19 @@
-const UsersDto = require('../db/dtos/UsersDto')
-const FirebaseDaoFactory = require('../db/daos/Firebase/FirebaseDaoFactory')
-const FireFactory = new FirebaseDaoFactory()
-const userDb = FireFactory.getDao('users')
+const logger = require('../utils/logger')
+const UsersRepository = require('../db/Repositories/UserRepository')
+const users = new UsersRepository()
 
 const fetchUsers = async () => {
   try {
-    return await userDb.getAll()
+    const test = await users.getAll()
+    return test
   } catch (error) {
     logger.error({error})
   }
 }
 
 const saveNewUser = async (newUser) => {
-  const plainUser = new UsersDto(newUser)
   try {
-    await userDb.save(plainUser)
+    await users.save(newUser)
   } catch (error) {
     logger.error({error})
   }

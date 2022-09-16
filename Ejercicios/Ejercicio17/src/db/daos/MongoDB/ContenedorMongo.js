@@ -1,9 +1,9 @@
-const config = require('./config/config');
+const config = require('../../config/config');
 const mongoose = require('mongoose')
 
 mongoose.connect(config.mongoDB.url, config.mongoDB.options)
 
-class ContenedorDB {
+class ContenedorMongo {
   constructor(collection, schema) {
     this.table = mongoose.model(collection, schema);
   };
@@ -99,4 +99,4 @@ class ContenedorDB {
   }
 }
 
-module.exports = ContenedorDB;
+module.exports = ContenedorMongo;

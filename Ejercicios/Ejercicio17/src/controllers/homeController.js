@@ -1,29 +1,23 @@
 const moment = require('moment');
 const logger = require('../utils/logger')
-const ProductsDto = require('../db/dtos/ProductsDto')
-const MessagesDto = require('../db/dtos/MessagesDto')
-const FirebaseDaoFactory = require('../db/daos/Firebase/FirebaseDaoFactory')
-const FireFactory = new FirebaseDaoFactory()
 
-const productsDb = FireFactory.getDao('products')
-const productsDb2 = FireFactory.getDao('products')
+const ProductsRepository = require('../db/Repositories/ProductRepository')
+const products = new ProductsRepository()
 
-console.log('Igualdad de DBs', productsDb === productsDb2)
-
-const messageDb = FireFactory.getDao('messages')
+const MessagessRepository = require('../db/Repositories/MessageRepository')
+const messages = new MessagessRepository()
 
 const fetchProducts = async () => {
   try {
-    return await productsDb.getAll();
+    return await products.getAll();
   } catch (error) {
     logger.error({error})
   }
 }
 
 const saveNewProduct = async (newProduct) => {
-  const plainProduct = new ProductsDto(newProduct)
   try {
-    await productsDb.save(plainProduct);
+    await products.save(newProduct);
   } catch (error) {
     logger.error(error)
   }
@@ -31,9 +25,9 @@ const saveNewProduct = async (newProduct) => {
 
 const fetchMessages = async () => {
   try {
-    const messages = await messageDb.getAll();
-    const orderedMessages = messages.sort((a, b) => {
-      return a.innerId - b.innerId
+    const fetchedmessages = await messages.getAll();
+    const orderedMessages = fetchedmessages.sort((a, b) => {
+      return a.rawDate - b.rawDate
     })
     return orderedMessages;
   } catch (error) {
@@ -42,13 +36,13 @@ const fetchMessages = async () => {
 }
 
 const saveNewMessage = async (newMessage) => {
+  newMessage.rawDate = new Date().valueOf()
   newMessage.date = moment().format('DD/MM/YYYY, HH:MM:SS');
-  const plainMessage = new MessagesDto(newMessage)
   try {
-    await messageDb.save(plainMessage);
+    await messages.save(newMessage);
   } catch (error) {
     logger.error({error})
   }
 }
 
-module.exports = { fetchProducts, fetchMessages, saveNewProduct, saveNewMessage, productsDb}
+module.exports = { fetchProducts, fetchMessages, saveNewProduct, saveNewMessage}
