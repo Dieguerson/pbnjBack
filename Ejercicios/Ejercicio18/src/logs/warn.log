@@ -321,3 +321,6 @@
 {"level":"warn","message":"Ruta /qweqwe inexistente para el método GET"}
 {"level":"warn","message":"Ruta /qweqwe inexistente para el método GET"}
 {"level":"warn","message":"Ruta /qweqwe inexistente para el método GET"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
