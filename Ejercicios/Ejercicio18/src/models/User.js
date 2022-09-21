@@ -9,6 +9,10 @@ const userSchema = new Schema ({
     type: String,
     required: true
   },
+  innerId: {
+    type: Number,
+    required: true
+  }
 },
 {
   timestamps: true

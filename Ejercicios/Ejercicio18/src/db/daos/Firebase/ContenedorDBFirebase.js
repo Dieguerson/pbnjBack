@@ -32,7 +32,6 @@ class ContenedorDB {
 
     const lastInnerId = sortedDb[sortedDb.length - 1]?.innerId
 
-
     object.innerId = lastInnerId ? lastInnerId + 1 : 1
     
     await this.collection.add({...object})
@@ -40,17 +39,29 @@ class ContenedorDB {
         await this.collection.doc(id).update({id: id})
         const created = await this.collection.doc(id).get()
         toReturn = {...created.data()}
-      }).catch(error => console.log('aqui', error))
+      }).catch(error => console.log(error))
 
     return toReturn;
   };
 
-  async modify(id, object) {
+  async modify(innerId, object) {
     let toReturn
 
-    await this.collection.doc(id).update({...object})
-    const updated = await this.collection.doc(id).get()
-    toReturn = {...updated.data()}
+    await this.collection.where('innerId', '==', Number(innerId))
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          doc.ref.update({...object})
+        })
+      })
+
+    await this.collection.where('innerId', '==', Number(innerId))
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          toReturn = doc.data()
+        })
+      })
 
     return toReturn;
   };
@@ -72,16 +83,25 @@ class ContenedorDB {
       toReturn.push({...doc.data()})
     })
     toReturn.sort((a, b) => {
-      return a.code - b.code
+      return a.innerId - b.innerId
     })
 
     return toReturn;
   }
 
-  async deleteById(id) {
-    const db = await this.collection.doc(id).delete()
+  async deleteById(innerId) {
+    let deleted;
 
-    return db;
+    await this.collection.where('innerId', '==', Number(innerId))
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          deleted = doc.data()
+          doc.ref.delete()
+        })
+      })
+
+    return deleted;
   }
 
   async deleteAll() {

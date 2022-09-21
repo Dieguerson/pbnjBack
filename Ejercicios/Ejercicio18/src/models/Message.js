@@ -16,6 +16,10 @@ const messageSchema = new Schema ({
   text: {
     type: String,
     required: true
+  },
+  innerId: {
+    type: Number,
+    required: true
   }
 },
 {

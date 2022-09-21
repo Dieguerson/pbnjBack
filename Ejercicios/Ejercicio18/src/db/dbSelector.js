@@ -2,8 +2,6 @@ const FirebaseDaoFactory = require('../db/daos/Firebase/FirebaseDaoFactory')
 const MongoDaoFactory = require('../db/daos/MongoDB/MongoDaoFactory')
 const { DATABASE } = process.env
 
-console.log(DATABASE)
-
 const dbSelector = () => {
   switch(DATABASE.toLowerCase()) {
     case 'firebase':

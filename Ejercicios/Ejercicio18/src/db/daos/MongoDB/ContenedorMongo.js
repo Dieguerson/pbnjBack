@@ -10,6 +10,24 @@ class ContenedorMongo {
 
   async save(object) {
     let db;
+
+    const currentDb = await this.table.find()
+    const dbExists = currentDb.length > 0
+
+    let sortedDb
+
+    if (dbExists) {
+      sortedDb = currentDb.sort((a , b) => {
+        return a.innerId - b.innerId
+      })
+    } else {
+      sortedDb = currentDb
+    }
+
+    const lastInnerId = sortedDb[sortedDb.length - 1]?.innerId
+
+    object.innerId = lastInnerId ? lastInnerId + 1 : 1
+
     await this.table.create(object)
       .then(async () => {
         await this.table.find()
@@ -26,7 +44,7 @@ class ContenedorMongo {
   async modify(id, object) {
     let db;
 
-    await this.table.findOneAndUpdate({_id:id}, object)
+    await this.table.findOneAndUpdate({innerId:id}, object)
       .then(async () => {
         await this.table.find()
           .then((data) => {
@@ -57,19 +75,20 @@ class ContenedorMongo {
     await this.table.find()
       .then((data) => {
         db = data;
-        db.sort((a, b) => {
-          return a.code - b.code
-        })
+        if (db.length > 0) {
+          db.sort((a, b) => {
+            return a.innerId - b.innerId
+          })
+        }
       })
       .catch(err => console.log(err));
-
     return db;
   }
 
   async deleteById(id) {
     let db;
 
-    await this.table.findOneAndDelete({_id: id})
+    await this.table.findOneAndDelete({innerId: id})
       .then(async () => {
         await this.table.find()
           .then((data) => {

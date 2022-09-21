@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
-    "request": "node https_client/index.js"
+    "test:manual": "node tests/manual/index.test.js",
+    "test:auto": "mocha --timeout 10000 tests/automatic/index.test.js"
   },
   "keywords": [],
   "author": "",

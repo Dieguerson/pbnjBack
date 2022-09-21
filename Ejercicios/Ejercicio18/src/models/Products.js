@@ -2,7 +2,7 @@ const {Schema} = require("mongoose")
 
 const productsSchema = new Schema ({
   price: {
-    type: Number,
+    type: String,
     required: true,
   },
   thumbnail:{
@@ -13,6 +13,10 @@ const productsSchema = new Schema ({
     type: String,
     required: true
   },
+  innerId: {
+    type: Number,
+    required: true
+  }
 },
 {
   timestamps: true

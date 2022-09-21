@@ -18,6 +18,14 @@ class ProductRepository {
     const plainProduct = new ProductsDto(product)
     await this.dao.save(plainProduct);
   }
+
+  async modify(id, product) {
+    await this.dao.modify(id, product);
+  }
+
+  async deleteById(id) {
+    await this.dao.deleteById(id);
+  }
 }
 
 module.exports = ProductRepository

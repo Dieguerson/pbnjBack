@@ -5,7 +5,6 @@ const args = process.argv.slice(2)
 const yargedArgs = yargs(args).default({ PORT: 8080, DATABASE: 'FIREBASE' }).alias({ p: 'PORT', db: 'DATABASE' }).argv
 const PORT = process.env.PORT || yargedArgs.PORT
 const DATABASE = yargedArgs.DATABASE
-console.log(DATABASE)
 process.env.DATABASE = DATABASE
 
 const compression = require('compression')

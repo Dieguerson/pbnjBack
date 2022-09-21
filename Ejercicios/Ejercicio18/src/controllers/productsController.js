@@ -19,4 +19,20 @@ const saveNewProduct = async (newProduct) => {
   }
 }
 
-module.exports = { fetchProducts, saveNewProduct }
+const modifyProduct = async (productId, product) => {
+  try {
+    await products.modify(productId, product);
+  } catch (error) {
+    logger.error(error)
+  }
+}
+
+const deleteProduct = async (productId) => {
+  try {
+    await products.deleteById(productId);
+  } catch (error) {
+    logger.error(error)
+  }
+}
+
+module.exports = { fetchProducts, saveNewProduct, deleteProduct, modifyProduct }
