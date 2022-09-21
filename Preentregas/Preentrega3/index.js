@@ -2,6 +2,8 @@ require('dotenv').config()
 const express = require('express');
 const app = express();
 
+const cors = require('cors')
+
 const cluster = require('cluster')
 const os = require('os')
 
@@ -73,6 +75,8 @@ if (cluster.isMaster && MODE === 'CLUSTER') {
     partialsDir: __dirname + "/src/views/partials",
     defaultLayout: "main.hbs"
   }))
+
+  app.use(cors())
 
   app.use(auth);
   app.use('/api', cart);
