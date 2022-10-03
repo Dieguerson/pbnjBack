@@ -10,15 +10,16 @@ process.env.DATABASE = DATABASE
 const compression = require('compression')
 
 const home = require('./src/routes/home')
-const auth = require('./src/routes/auth')
-const infoView = require('./src/routes/info')
-const fake = require('./src/routes/fake')
-const randoms = require('./src/routes/randoms');
-const products = require('./src/routes/products');
-const catcher = require('./src/routes/catcher');
+// const auth = require('./src/routes/auth')
+// const infoView = require('./src/routes/info')
+// const fake = require('./src/routes/fake')
+// const randoms = require('./src/routes/randoms');
+// const products = require('./src/routes/products');
+// const catcher = require('./src/routes/catcher');
 
 const Koa = require('koa');
 const koaBody = require('koa-body')
+const handlebars = require('koa-handlebars')
 const app = new Koa();
 // const http = require('http');
 // const server = http.createServer(app);
@@ -49,18 +50,6 @@ app.use((_, res, next) => {
 
 app.use(reqLogger)
 
-app.use(express.json())
-app.use(express.static(__dirname + "/public/"))
-
-app.set('views', './src/views');
-app.set('view engine', 'hbs');
-app.engine('hbs', engine({
-  extname: 'hbs',
-  layoutsDir: __dirname + '/src/views/layouts',
-  partialsDir: __dirname + '/src/views/partials',
-  defaultLayout: 'main.hbs'
-}));
-
 app.use(cookieParser())
 app.use(session(
   {
@@ -79,13 +68,13 @@ app.use(session(
   app.use(passport.session())
   
   app.use(home)
-  app.use(auth)
-  app.use(infoView)
-  app.use('/api', fake)
-  app.use('/api', randoms);
-  app.use('/api', products);
-  app.use(catcher);
+  // app.use(auth)
+  // app.use(infoView)
+  // app.use('/api', fake)
+  // app.use('/api', randoms);
+  // app.use('/api', products);
+  // app.use(catcher);
   
-  server.listen(PORT, () => {
+  app.listen(PORT, () => {
     console.info(`Server Arriba en ${PORT}`);
   });

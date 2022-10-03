@@ -1,12 +1,13 @@
-const express = require('express');
-const { Router } = express;
-let router = new Router();
+const Router = require('koa-router');
+let router = new Router({
+  prefix: '/auth'
+});
 
 const passport = require('../utils/passport')
 
 const { saveNewUser } = require('../controllers/authController');
 
-router.get('/auth', (_, res) => {
+router.get('/', (ctx) => {
   res.render('auth', {script: '/scripts/auth.js'});
 })
 
