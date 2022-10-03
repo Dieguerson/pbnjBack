@@ -17,12 +17,13 @@ const randoms = require('./src/routes/randoms');
 const products = require('./src/routes/products');
 const catcher = require('./src/routes/catcher');
 
-const express = require('express');
-const app = express();
-const http = require('http');
-const server = http.createServer(app);
-const ioConnection = require('./src/controllers/socketController')
-ioConnection(server)
+const Koa = require('koa');
+const koaBody = require('koa-body')
+const app = new Koa();
+// const http = require('http');
+// const server = http.createServer(app);
+// const ioConnection = require('./src/controllers/socketController')
+// ioConnection(server)
 
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
@@ -36,6 +37,8 @@ const reqLogger = (req, _, next) => {
   logger.info(`Accediendo a ${req.url} mediante el método ${req.method}`)
   next()
 }
+
+app.use(koaBody())
 
 app.use(compression())
 
