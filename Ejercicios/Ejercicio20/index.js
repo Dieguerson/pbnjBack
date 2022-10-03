@@ -34,10 +34,10 @@ const { engine } = require('express-handlebars');
 
 const logger = require('./src/utils/logger')
 
-const reqLogger = (req, _, next) => {
-  logger.info(`Accediendo a ${req.url} mediante el método ${req.method}`)
-  next()
-}
+// const reqLogger = (req, _, next) => {
+//   logger.info(`Accediendo a ${req.url} mediante el método ${req.method}`)
+//   next()
+// }
 
 app.use(koaBody())
 
@@ -48,7 +48,7 @@ app.use((_, res, next) => {
   next();
 });
 
-app.use(reqLogger)
+// app.use(reqLogger)
 
 app.use(cookieParser())
 app.use(session(
