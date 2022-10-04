@@ -5,13 +5,12 @@ let router = new Router();
 
 const script = process.env.ENVIRON === "heroku" ? '/scripts/mainHeroku.js' : '/scripts/main.js'
 
-router.use(handlebars({
-  defaultLayout: "main"
-}));
+const test = () => {
+  return 'index'
+}
 
-router.get('/', function *() {
-  console.log('AQUI')
-  yield this.render('index', {script})
+router.get('/', async ctx => {
+  await ctx.render('main', { partial: test() })
 });
 
 module.exports = router;

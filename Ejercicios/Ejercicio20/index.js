@@ -20,6 +20,8 @@ const home = require('./src/routes/home')
 const Koa = require('koa');
 const koaBody = require('koa-body')
 const cors = require('@koa/cors')
+const static = require('koa-static')
+const views = require('koa-views-handlebars')
 const app = new Koa();
 // const http = require('http');
 // const server = http.createServer(app);
@@ -46,6 +48,10 @@ app.use(compress())
 app.use(cors());
 
 // app.use(reqLogger)
+
+app.use(static(__dirname + "/public/"))
+
+app.use(views(__dirname + "/src/views/layouts", { partialDirs: __dirname + '/src/views/partials', helperDirs: __dirname + '/src/views/helpers', debug: true }))
 
 // app.use(cookie())
 // app.use(session(
