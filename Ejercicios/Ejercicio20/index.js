@@ -7,7 +7,7 @@ const PORT = process.env.PORT || yargedArgs.PORT
 const DATABASE = yargedArgs.DATABASE
 process.env.DATABASE = DATABASE
 
-const compression = require('compression')
+const compress = require('koa-compress')
 
 const home = require('./src/routes/home')
 // const auth = require('./src/routes/auth')
@@ -19,15 +19,15 @@ const home = require('./src/routes/home')
 
 const Koa = require('koa');
 const koaBody = require('koa-body')
-const handlebars = require('koa-handlebars')
+const cors = require('@koa/cors')
 const app = new Koa();
 // const http = require('http');
 // const server = http.createServer(app);
 // const ioConnection = require('./src/controllers/socketController')
 // ioConnection(server)
 
-const session = require('express-session')
-const cookieParser = require('cookie-parser')
+// const session = require('express-session')
+// const cookie = require('koa-cookie')
 const passport = require('./src/utils/passport')
 
 const { engine } = require('express-handlebars');
@@ -41,33 +41,30 @@ const logger = require('./src/utils/logger')
 
 app.use(koaBody())
 
-app.use(compression())
+app.use(compress())
 
-app.use((_, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-});
+app.use(cors());
 
 // app.use(reqLogger)
 
-app.use(cookieParser())
-app.use(session(
-  {
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    rolling: true, 
-    cookie: {
-      httpOnly: false,
-      secure: false,
-      _expires: 7 * 24 * 60 * 60 * 1000
-    }
-  }
-  ))
-  app.use(passport.initialize())
-  app.use(passport.session())
-  
-  app.use(home)
+// app.use(cookie())
+// app.use(session(
+//   {
+//     secret: process.env.SESSION_SECRET,
+//     resave: true,
+//     saveUninitialized: true,
+//     rolling: true, 
+//     cookie: {
+//       httpOnly: false,
+//       secure: false,
+//       _expires: 7 * 24 * 60 * 60 * 1000
+//     }
+//   }
+//   ))
+  // app.use(passport.initialize())
+  // app.use(passport.session())
+
+  app.use(home.routes())
   // app.use(auth)
   // app.use(infoView)
   // app.use('/api', fake)
