@@ -22,11 +22,13 @@ const koaBody = require('koa-body')
 const cors = require('@koa/cors')
 const static = require('koa-static')
 const views = require('koa-views-handlebars')
+const Io = require('koa-socket-2')
+const io = new Io()
 const app = new Koa();
 // const http = require('http');
 // const server = http.createServer(app);
 // const ioConnection = require('./src/controllers/socketController')
-// ioConnection(server)
+// ioConnection(app)
 
 // const session = require('express-session')
 // const cookie = require('koa-cookie')
@@ -51,7 +53,11 @@ app.use(cors());
 
 app.use(static(__dirname + "/public/"))
 
-app.use(views(__dirname + "/src/views/layouts", { partialDirs: __dirname + '/src/views/partials', helperDirs: __dirname + '/src/views/helpers', debug: true }))
+app.use(views(__dirname + "/src/views/layouts", { 
+  partialDirs: __dirname + '/src/views/partials',
+  helperDirs: __dirname + '/src/views/helpers',
+  debug: false
+}))
 
 // app.use(cookie())
 // app.use(session(
@@ -77,6 +83,8 @@ app.use(views(__dirname + "/src/views/layouts", { partialDirs: __dirname + '/src
   // app.use('/api', randoms);
   // app.use('/api', products);
   // app.use(catcher);
+
+  io.attach(app)
   
   app.listen(PORT, () => {
     console.info(`Server Arriba en ${PORT}`);
