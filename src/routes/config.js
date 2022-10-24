@@ -7,71 +7,71 @@ const {passport} = require('../utils/passport');
 
 const prodConfig = [
   {
-    key: NODE_TLS_REJECT_UNAUTHORIZED,
+    key: 'NODE_TLS_REJECT_UNAUTHORIZED',
     value: process.env.NODE_TLS_REJECT_UNAUTHORIZED
   },
   {
-    key: G_MAIL,
+    key: 'G_MAIL',
     value: process.env.G_MAIL
   },
   {
-    key: G_MAIL_PASS,
+    key: 'G_MAIL_PASS',
     value: process.env.G_MAIL_PASS
   },
   {
-    key: TWILIO_ACCOUNT,
+    key: 'TWILIO_ACCOUNT',
     value: process.env.TWILIO_ACCOUNT
   },
   {
-    key: TWILIO_AUTH,
+    key: 'TWILIO_AUTH',
     value: process.env.TWILIO_AUTH
   },
   {
-    key: TWILIO_SMS_NUMBER,
+    key: 'TWILIO_SMS_NUMBER',
     value: process.env.TWILIO_SMS_NUMBER
   },
   {
-    key: TWILIO_WA_NUMBER,
+    key: 'TWILIO_WA_NUMBER',
     value: process.env.TWILIO_WA_NUMBER
   },
   {
-    key: ADMIN_NUMBER,
+    key: 'ADMIN_NUMBER',
     value: process.env.ADMIN_NUMBER
   },
   {
-    key: NODE_ENV,
+    key: 'NODE_ENV',
     value: process.env.NODE_ENV
   },
   {
-    key: PORT_DEV,
+    key: 'PORT_DEV',
     value: process.env.PORT_DEV
   },
   {
-    key: MODE_DEV,
+    key: 'MODE_DEV',
     value: process.env.MODE_DEV
   },
   {
-    key: MONGO_URL_DEV,
+    key: 'MONGO_URL_DEV',
     value: process.env.MONGO_URL_DEV
   },
   {
-    key: COOKIE_EXPIRATION_DEV,
+    key: 'COOKIE_EXPIRATION_DEV',
     value: process.env.COOKIE_EXPIRATION_DEV
   },
   {
-    key: PORT_PROD,
+    key: 'PORT_PROD',
     value: process.env.PORT_PROD
   },
   {
-    key: MODE_PROD,
+    key: 'MODE_PROD',
     value: process.env.MODE_PROD
   },
   {
-    key: MONGO_URL_PROD,
+    key: 'MONGO_URL_PROD',
     value: process.env.MONGO_URL_PROD
   },
   {
-    key: COOKIE_EXPIRATION_PROD,
+    key: 'COOKIE_EXPIRATION_PROD',
     value: process.env.COOKIE_EXPIRATION_PROD
   }
 ]
