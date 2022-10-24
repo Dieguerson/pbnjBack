@@ -79,6 +79,7 @@ const prodConfig = [
 
 const { NODE_ENV } = process.env
 
+const envReader = NODE_ENV === 'DEV' ? require('../utils/.envReader') : null
 const config = NODE_ENV === 'DEV' ? envReader : prodConfig
 
 router.get('/config', passport.authenticate('auth', {session: false}), function(req, res) {
