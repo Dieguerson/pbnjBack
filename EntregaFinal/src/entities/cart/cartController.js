@@ -64,7 +64,7 @@ const addToCart = async (cartId, productId, ammount) => {
 const deleteFromCart = async (cartId, productId) => {
   try {
     const cart = await fetchCartById(cartId)
-    const toDelete = cart.products.find(poke => poke._id.toString() === productId)
+    const toDelete = cart.products.find(poke => poke.product._id.toString() === productId)
     const index = cart.products.indexOf(toDelete)
     cart.products.splice(index, 1)
     await modifyCart(cartId, cart)

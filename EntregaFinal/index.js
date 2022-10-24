@@ -37,7 +37,7 @@ const { NODE_ENV } = process.env
 const cpus = os.cpus().length
 const pid = process.pid
 
-const PORT = NODE_ENV === 'DEV' ? process.env.PORT_DEV : process.env.PORT_PROD
+const PORT = NODE_ENV === 'DEV' ? process.env.PORT_DEV : process.env.PORT
 
 const MODE = NODE_ENV === 'DEV' ? process.env.MODE_DEV : process.env.MODE_PROD
 

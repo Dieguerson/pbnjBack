@@ -1,3 +1,3 @@
-const socket = io('https://pbnjback.herokuapp.com/',
+const socket = io('https://entrega-final-coder-dieguerson.herokuapp.com/chat',
   { transports: ["websocket"] }
 );

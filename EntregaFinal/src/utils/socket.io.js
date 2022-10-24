@@ -3,13 +3,7 @@ const { fetchMessages, fetchMessagesByEmail, saveNewMessage } = require('../enti
 const { Server } = require('socket.io');
 
 const ioConnection = (server) => {
-  const io = new Server(server, {
-    cors: {
-      origin: 'https://pbnjback.herokuapp.com/',
-      methods: ["GET", "POST"],
-      credentials: true
-    }
-  });
+  const io = new Server(server);
 
   io.on('connection', async (socket) => {
     let messages = await fetchMessages()

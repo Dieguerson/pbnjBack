@@ -12,7 +12,6 @@
         <p><b>Price:</b> ${{this.product.price}}</p>
         <p><b>Stock:</b> {{this.product.stock}}</p>
         <p><b>Ammount:</b> {{this.ammount}}</p>
-        <button class="mb-2 bg-blue-200 text-black rounded shadow-sm w-auto p-1 mt-2 cart-btn" onclick="deleteProduct('{{this.product._id}}', '{{../cart._id}}')">Eliminar</button>
       </div>
     {{/each}}
   {{/each}}
