@@ -1,4 +1,4 @@
-const PurchaseDTO = require('./PurchaseDTO')
+const PurchaseDTO = require('./PurchaseDto')
 const chosenDb = require('../../database/dbSelector')
 
 class PurchaseRepository {

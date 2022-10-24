@@ -1,4 +1,4 @@
-const ChatDTO = require('./ChatDTO')
+const ChatDTO = require('./ChatDto')
 const chosenDb = require('../../database/dbSelector')
 
 class ChatRepository {
