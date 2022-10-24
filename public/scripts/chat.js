@@ -1,5 +1,3 @@
-const socket = io();
-
 const path = window.location.pathname
 
 let db = [];
