@@ -27,7 +27,8 @@ class CartRepository {
   }
 
   async modify(id, cart) {
-    await this.dao.modify(id, cart);
+    const plainCart = new CartDto(cart)
+    await this.dao.modify(id, plainCart);
   }
 
   async deleteById(id) {
