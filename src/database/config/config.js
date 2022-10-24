@@ -4,7 +4,7 @@ const MONGO_URL = NODE_ENV === "DEV" ? process.env.MONGO_URL_DEV : process.env.M
 
 const settings = {
   mongoDB : {
-    url: process.env.MONGO_URL_PROD || process.env.MONGO_URL_PROD,
+    url: MONGO_URL || process.env.MONGO_URL_PROD,
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
