@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   if (req.isAuthenticated()) {
     res.redirect('/productos')
   } else {
-    res.render("handlebars/index.hbs", {script: '/scripts/index.js', routes: routes(req)})
+    res.render("handlebars/index.hbs", {script: ['/scripts/index.js'], routes: routes(req)})
   }
 })
 

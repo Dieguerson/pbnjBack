@@ -11,6 +11,10 @@ const { fetchUserById, saveNewUser, startPurchase } = require('./userController'
 const { fetchCartById } = require('../cart/cartController');
 const test = require('../../utils/jwt');
 
+const { NODE_ENV } =  process.env
+
+const COOKIE_EXPIRATION = NODE_ENV === 'DEV' ? process.env.COOKIE_EXPIRATION_DEV : process.env.COOKIE_EXPIRATION_PROD
+
 router.post('/registro', [upload.single("avatar"), passport.authenticate('register', {session: false})], async (req, res) => {
   if(req.user){
     const { newUser } = req
@@ -24,12 +28,12 @@ router.post('/registro', [upload.single("avatar"), passport.authenticate('regist
 })
 
 router.get('/login', (req, res) => {
-  res.render("handlebars/login.hbs", {script: '/scripts/login.js', routes: routes(req)})
+  res.render("handlebars/login.hbs", {script: ['/scripts/login.js'], routes: routes(req)})
 })
 
 router.post('/login', [passport.authenticate('login', {session: false}), test], (req, res) => {
   const { token } = req
-  res.cookie('jwt', token, { maxAge: 100000000 }).status(200).send()
+  res.cookie('jwt', token, {maxAge: Number(COOKIE_EXPIRATION)}).status(200).send()
 })
 
 router.get('/salir', (req, res) => {
@@ -42,7 +46,7 @@ router.get('/usuario/:email', passport.authenticate('auth', {session: false}), a
     const { email } = req.params
     const userById = await fetchUserById(email)
     const cartById = await fetchCartById(userById.cartId)
-    res.render("handlebars/user.hbs", {script: '/scripts/user.js', cart: cartById, user: userById, routes: routes(req)})
+    res.render("handlebars/user.hbs", {script: ['/scripts/user.js'], cart: cartById, user: userById, routes: routes(req)})
   } else {
     res.redirect('/')
   }

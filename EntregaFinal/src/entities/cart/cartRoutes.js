@@ -12,7 +12,7 @@ router.get('/carrito', passport.authenticate('auth', {session: false}), async (r
   if(req.isAuthenticated()){
     const { cartId } = req.user
     const cartById = await fetchCartById(cartId)
-    res.render("handlebars/cart.hbs", {script: '/scripts/cart.js', cart: cartById, routes: routes(req)})
+    res.render("handlebars/cart.hbs", {script: ['/scripts/cart.js'], cart: cartById, routes: routes(req)})
   } else {
     res.redirect('/')
   }

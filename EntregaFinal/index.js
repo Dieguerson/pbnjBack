@@ -33,10 +33,13 @@ const purchase = require('./src/entities/purchase/purchaseRoutes');
 const user = require('./src/entities/user/userRoutes');
 const error = require('./src/routes/error');
 
-const PORT = process.env.PORT || 8080
-const { MODE } = process.env
+const { NODE_ENV } = process.env
 const cpus = os.cpus().length
 const pid = process.pid
+
+const PORT = NODE_ENV === 'DEV' ? process.env.PORT_DEV : process.env.PORT_PROD
+
+const MODE = NODE_ENV === 'DEV' ? process.env.MODE_DEV : process.env.MODE_PROD
 
 const logger = require('./src/utils/logger')
 
@@ -109,7 +112,7 @@ if (cluster.isMaster && MODE === 'CLUSTER') {
   })
   app.use(error);
 
-  server.listen(PORT, () => {
+  server.listen(PORT || 3000, () => {
     logger.info(`Server Arriba en el puerto: ${PORT}`);
   });
 }

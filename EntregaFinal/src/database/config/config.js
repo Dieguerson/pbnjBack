@@ -1,8 +1,10 @@
-const { MONGO_URL } = process.env
+const { NODE_ENV } = process.env
+
+const MONGO_URL = NODE_ENV === "DEV" ? process.env.MONGO_URL_DEV : process.env.MONGO_URL_PROD
 
 const settings = {
   mongoDB : {
-    url: 'mongodb://localhost:27017/',
+    url: process.env.MONGO_URL_PROD || process.env.MONGO_URL_PROD,
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,

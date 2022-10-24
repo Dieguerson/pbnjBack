@@ -8,7 +8,7 @@ router.get('*', function(req, res) {
   const route = req.originalUrl
   const method = req.method
   logger.warn(`Intento de navegación a ${method} ${route}`)
-  res.send({error: 404, descripcion:`Erm, nos descubriste. No implementamos ${method} para la ruta ${route}`})
+  res.render('EJS/error.ejs', {data:{id: 404, description: `La ruta ${route}no está disponible para el método ${method}`}})
 });
 
 module.exports = router;

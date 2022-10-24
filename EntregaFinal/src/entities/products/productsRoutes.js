@@ -13,7 +13,7 @@ router.get('/productos', passport.authenticate('auth', {session: false}), async 
   if(req.isAuthenticated()){
     const { admin } = req.user
     const allProducts = await fetchProducts();
-    res.render("handlebars/products.hbs", {script: '/scripts/products.js', data: {products: allProducts, admin}, routes: routes(req)})
+    res.render("handlebars/products.hbs", {script: ['/scripts/products.js'], data: {products: allProducts, admin}, routes: routes(req)})
   } else {
     res.redirect('/')
   }
@@ -28,14 +28,14 @@ router.get('/productos/:toCheck', passport.authenticate('auth', {session: false}
       if (productsByCategory instanceof Error){
         res.render('EJS/error.ejs', {data:{id: 404, description: 'La categoría que estás buscando no existe'}})
       } else {
-        res.render("handlebars/products.hbs", {script: '/scripts/products.js', products: productsByCategory, routes: routes(req)})
+        res.render("handlebars/products.hbs", {script: ['/scripts/products.js'], products: productsByCategory, routes: routes(req)})
       }
     } else {
       const productById = await fetchProductById(toCheck);
       if (productById instanceof Error){
         res.render('EJS/error.ejs', {data:{id: 404, description: 'El producto que estás buscando no existe'}})
       } else {
-        res.render("handlebars/products.hbs", {script: '/scripts/products.js', products: [productById], routes: routes(req)})
+        res.render("handlebars/products.hbs", {script: ['/scripts/products.js'], products: [productById], routes: routes(req)})
       }
     }
   } else {

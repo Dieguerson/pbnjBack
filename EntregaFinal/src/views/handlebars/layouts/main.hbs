@@ -12,6 +12,8 @@
 <body class="grid grid-cols-1 mb-4">
   {{>commons/navBar routes = routes}}
   {{{body}}}
-  <script src="{{script}}"></script>
+  {{#each script}}
+    <script src="{{this}}"></script>
+  {{/each}}
 </body>
 </html>
