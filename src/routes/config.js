@@ -4,7 +4,6 @@ let router = new Router();
 
 const routes = require('../utils/routes')
 const {passport} = require('../utils/passport');
-const envReader = require('../utils/.envReader')
 
 const prodConfig = [
   {
