@@ -1,0 +1,12 @@
+// -list.pug
+section.flex.flex-col.justify-center.items-center.mt-10
+  ul.text-center.border.rounded-md.p-2.border-black
+    p Argumentos de entrada:
+    li #{info.args}
+  p Plataforma: #{info.platform}
+  p Versión de Node.js: #{info.node}
+  p Memoria total reservada: #{info.rss}
+  p.text-center Path de Ejecución: #{info.path}
+  p Process ID: #{info.pid}
+  p Carpeta del Proyecto: #{info.folder}
+a(href="/" class="text-xl text-center text-red-500 hover:text-red-700 visited:text-blue-700 mt-4") Volver al Inicio

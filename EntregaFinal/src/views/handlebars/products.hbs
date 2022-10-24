@@ -1,0 +1,7 @@
+<section class="flex flex-col items-center">
+  <h1 class="text-2xl font-bold italic underline text-center">Lista de Productos</h1>
+  {{>products/productList data = data}}
+  {{#if data.admin}}
+    {{>products/productForm}}
+  {{/if}}
+</section>

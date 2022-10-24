@@ -1,0 +1,24 @@
+<article id="products" class="grid grid-cols-2 gap-3 mt-4 max-w-[500px]">
+  {{#each data.products}}
+    <div class="border-2 border-black rounded flex flex-col items-center p-2">
+      <h3 class="text-xl font-bold capitalize">{{this.name}}</h3>
+      <img class="w-10 h-10" src={{this.thumbnail}} alt={{this.name}}>
+      <p><b>Price:</b> ${{this.price}}</p>
+      <p id="maxAmmount{{this._id}}"><b>Stock:</b> {{this.stock}}</p>
+      <p class="text-center"><b>ID del Producto:</b> {{this._id}}</p>
+      <p class="text-center"><b>Descripción:</b> {{this.description}}</p>
+
+      <div class="w-20 flex flex-row flex-nowrap justify-between items-center">
+        <button class="flex border border-black rounded-full w-4 h-4 items-center justify-center pb-1" onclick="subtract('{{this._id}}')"> - </button>
+        <input disabled type="text" placeholder="0" class="border border-black rounded-sm mx-2 w-5 text-center placeholder:text-black" id="ammount{{this._id}}">
+        <button class="flex border border-black rounded-full w-4 h-4 items-center justify-center pb-1" onclick="add('{{this._id}}')"> + </button>
+      </div>
+      
+      {{#if ../data.admin}}
+        <button class="mb-2 bg-blue-200 text-black rounded shadow-sm w-auto p-1 mt-2 admin-btn" onclick="updatePoke('{{this._id}}')">Actualizar</button>
+        <button class="mb-2 bg-red-500 text-black rounded shadow-sm w-auto p-1 mt-2 admin-btn" onclick="killPoke('{{this._id}}')">Eliminar</button>
+      {{/if}}
+      <button class="mb-2 bg-red-200 text-black rounded shadow-sm w-auto p-1 mt-2 admin-btn" onclick="addToCart('{{this._id}}')">Añadir a Carrito</button>
+    </div>
+  {{/each}}
+</article>

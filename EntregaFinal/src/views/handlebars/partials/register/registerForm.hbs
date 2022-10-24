@@ -1,0 +1,244 @@
+<form 
+  class="
+    flex
+    flex-col
+    border-4
+    border-blue-900
+    rounded-lg
+    p-4
+    mt-3
+    mb-2
+    w-full
+    max-w-[296px]
+  "
+  id="signIn"
+>
+  <h2
+    class="text-2xl font-bold text-blue-800 mb-4"
+  >
+    Registrate!
+  </h2>
+  
+  <label
+    class="font-bold text-blue-500"
+    for="userSignInName"
+  >
+    Nombre de Usuario
+  </label>
+  <input
+    class="
+      border-2
+      border-blue-300
+      rounded-md
+      bg-blue-300/20
+      shadow-sm
+      shadow-orange-400
+      text-blue-700
+    "
+    id="userSignInName"
+    type="text"
+    name="userName"
+  >
+
+  <label
+    class="font-bold text-blue-500"
+    for="userSignInAddress"
+  >
+    Dirección
+  </label>
+  <input
+    class="
+      border-2
+      border-blue-300
+      rounded-md
+      bg-blue-300/20
+      shadow-sm
+      shadow-orange-400
+      text-blue-700
+    "
+    id="userSignInAddress"
+    type="text"
+    name="address"
+  >
+
+  <label
+    class="font-bold text-blue-500"
+    for="userSignInAge"
+  >
+    Age
+  </label>
+  <input
+    class="
+      border-2
+      border-blue-300
+      rounded-md
+      bg-blue-300/20
+      shadow-sm
+      shadow-orange-400
+      text-blue-700
+    "
+    id="userSignInAge"
+    type="number"
+    name="age"
+  >
+
+  <label
+    class="font-bold text-blue-500"
+    for="userSignInEmail"
+  >
+    Email
+  </label>
+  <input
+    class="
+      border-2
+      border-blue-300
+      rounded-md
+      bg-blue-300/20
+      shadow-sm
+      shadow-orange-400
+      text-blue-700
+    "
+    id="userSignInEmail"
+    type="mail"
+    name="email"
+  >
+
+  <label
+    class="font-bold text-blue-500"
+    for="userSignInRol"
+  >
+    Rol
+  </label>
+  <select
+    class="
+      border-2
+      border-blue-300
+      rounded-md
+      bg-blue-300/20
+      shadow-sm
+      shadow-orange-400
+      text-blue-700
+    "
+    id="userSignInRol"
+    name="rol"
+  >
+    <option value="user">User</option>
+    <option value="admin">Admin</option>
+  </select>
+
+  <label
+    class="font-bold text-blue-500"
+    for="userSignInPhone"
+  >
+    Número Telefónico
+  </label>
+  <input
+    class="
+      border-2
+      border-blue-300
+      rounded-md
+      bg-blue-300/20
+      shadow-sm
+      shadow-orange-400
+      text-blue-700
+    "
+    id="userSignInPhone"
+    type="tel"
+    name="phone"
+  >
+  <p 
+    id="phoneValidation"
+    class="ml-2 text-sm text-red-500"
+  >
+    El número debe empezar con +54
+  </p>
+
+  <label
+    class="font-bold text-blue-500"
+    for="userSignInAvatar"
+  >
+    Avatar
+  </label>
+  <input
+    type="file"
+    name="avatar"
+    id="userSignInAvatar"
+  >
+
+  <label
+    class="font-bold text-blue-500"
+    for="userSignInPass"
+  >
+    Contraseña
+  </label>
+  <input
+    class="
+      border-2
+      border-blue-300
+      rounded-md
+      bg-blue-300/20
+      shadow-sm
+      shadow-orange-400
+      text-blue-700
+    "
+    id="userSignInPass"
+    type="password"
+    name="password"
+  >
+
+  <label
+    class="font-bold text-blue-500"
+    for="userSignInRepeatPass"
+  >
+    Repetir Contraseña
+  </label>
+  <input
+    class="
+      border-2
+      border-blue-300
+      rounded-md
+      bg-blue-300/20
+      shadow-sm
+      shadow-orange-400
+      text-blue-700
+    "
+    id="userSignInRepeatPass"
+    type="password"
+    name="passwordRepeat"
+  >
+  <p 
+    id="passValidation"
+    class="ml-2 text-sm text-red-500"
+  >
+    Debe coincidir con el campo anterior
+  </p>
+
+  <input
+    id="submitSignIn" 
+    disabled
+    class="
+      disabled:border-gray-300
+      disabled:bg-gray-200/50
+      disabled:cursor-not-allowed
+      disabled:shadow-none
+      disabled:text-gray-500
+      border
+      border-blue-300
+      rounded-md
+      bg-blue-400
+      w-fit
+      self-end
+      mt-3
+      p-1
+      font-bold
+      text-red-500
+      hover:shadow-md
+      shadow-orange-400
+    "
+    type="submit"
+    value="Enviar"
+  >
+</form>
+
+<article id="signInSuccess" class="hidden hover:shadow-lg shadow-orange-400 p-4 flex flex-col items-center border-2 border-blue-500 bg-blue-500/20 col-span-2'"></article>
+<article id="signInError" class="hidden hover:shadow-lg shadow-orange-400 p-4 flex flex-col items-center border-2 border-red-500 bg-red-500/20 col-span-2'"></article>
