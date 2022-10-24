@@ -134,3 +134,7 @@
 {"level":"error"}
 {"level":"error"}
 {"level":"error"}
+{"level":"warn","message":"Email inexistente o pass incorrecta"}
+{"level":"warn","message":"Email inexistente o pass incorrecta"}
+{"level":"warn","message":"Email inexistente o pass incorrecta"}
+{"level":"warn","message":"Intento de navegación a GET /products"}

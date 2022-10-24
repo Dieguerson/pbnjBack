@@ -6,10 +6,11 @@ const routes = (req) => {
     }
   ]
 
-  if (!!req.session.passport) {
+  if (req.isAuthenticated()) {
+    routesArray.shift()
     routesArray.push({
       name: 'Usuario',
-      route: `/usuario/${req.session.passport.user._id}`
+      route: `/usuario/${req.user._id}`
     })
     routesArray.push({
       name: 'Productos',

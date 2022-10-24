@@ -8,14 +8,11 @@ const { upload } = require('../../utils/multer')
 const routes = require('../../utils/routes')
 
 const { fetchUserById, saveNewUser, startPurchase } = require('./userController')
-const { fetchCartById } = require('../cart/cartController')
+const { fetchCartById } = require('../cart/cartController');
+const test = require('../../utils/jwt');
 
-router.get('/registro', (req, res) => {
-  res.render("handlebars/register.hbs", {script: '/scripts/register.js', routes: routes(req)})
-})
-
-router.post('/registro', [upload.single("avatar"), passport.authenticate('register')], async (req, res) => {
-  if(req.session.passport){
+router.post('/registro', [upload.single("avatar"), passport.authenticate('register', {session: false})], async (req, res) => {
+  if(req.user){
     const { newUser } = req
     const filePath = req.file.path
     await saveNewUser(newUser, filePath)
@@ -30,17 +27,18 @@ router.get('/login', (req, res) => {
   res.render("handlebars/login.hbs", {script: '/scripts/login.js', routes: routes(req)})
 })
 
-router.post('/login', passport.authenticate('auth'), (_, res) => {
-  res.status(200).send()
+router.post('/login', [passport.authenticate('login', {session: false}), test], (req, res) => {
+  const { token } = req
+  res.cookie('jwt', token, { maxAge: 100000000 }).status(200).send()
 })
 
 router.get('/salir', (req, res) => {
-  req.session.destroy()
-  res.status(200).send()
+  delete req.user
+  res.clearCookie('jwt').status(200).send()
 })
 
-router.get('/usuario/:email', async (req, res) => {
-  if(req.session.passport){
+router.get('/usuario/:email', passport.authenticate('auth', {session: false}), async (req, res) => {
+  if(req.isAuthenticated()){
     const { email } = req.params
     const userById = await fetchUserById(email)
     const cartById = await fetchCartById(userById.cartId)
@@ -50,10 +48,10 @@ router.get('/usuario/:email', async (req, res) => {
   }
 })
 
-router.get('/usuario/compra/:cartId', async (req, res) => {
-  if(req.session.passport){
+router.get('/usuario/compra/:cartId', passport.authenticate('auth', {session: false}), async (req, res) => {
+  if(req.isAuthenticated()){
     const { cartId } = req.params
-    const { _id } = req.session.passport.user
+    const { _id } = req.user
     await startPurchase(_id, cartId)
     res.status(200).send() 
   } else {

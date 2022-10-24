@@ -7,10 +7,11 @@ const routes = require('../../utils/routes')
 const { fetchProducts, fetchProductById, fetchProductByCategory, saveNewProduct, modifyProduct, deleteProduct, fetchImageById } = require('./productsController')
 
 const logger = require('../../utils/logger');
+const {passport} = require('../../utils/passport');
 
-router.get('/productos', async (req, res) => {
-  if(req.session.passport){
-    const { admin } = req.session.passport.user
+router.get('/productos', passport.authenticate('auth', {session: false}), async (req, res) => {
+  if(req.isAuthenticated()){
+    const { admin } = req.user
     const allProducts = await fetchProducts();
     res.render("handlebars/products.hbs", {script: '/scripts/products.js', data: {products: allProducts, admin}, routes: routes(req)})
   } else {
@@ -18,8 +19,8 @@ router.get('/productos', async (req, res) => {
   }
 });
 
-router.get('/productos/:toCheck', async (req, res) => {
-  if(req.session.passport){
+router.get('/productos/:toCheck', passport.authenticate('auth', {session: false}), async (req, res) => {
+  if(req.isAuthenticated()){
     const { toCheck } = req.params
     const selector = toCheck.length === 24
     if (!selector) {
@@ -42,8 +43,8 @@ router.get('/productos/:toCheck', async (req, res) => {
   }
 })
 
-router.get('/producto/:id', async (req, res) =>{
-  if(req.session.passport){
+router.get('/producto/:id', passport.authenticate('auth', {session: false}), async (req, res) =>{
+  if(req.isAuthenticated()){
     const { id } = req.params;
     const productById = await fetchProductById(id);
     res.status(200).send(productById)
@@ -52,8 +53,8 @@ router.get('/producto/:id', async (req, res) =>{
   }
 });
 
-router.post('/api/productos/:auth', async (req, res) => {
-  if(req.session.passport){
+router.post('/api/productos/:auth', passport.authenticate('auth', {session: false}), async (req, res) => {
+  if(req.isAuthenticated()){
     const user_type = req.params.auth
     if (user_type === 'admin') {    
       const { newItem } = req.body;
@@ -68,8 +69,8 @@ router.post('/api/productos/:auth', async (req, res) => {
   }
 });
 
-router.put('/api/productos/:auth/:id', async (req, res) => {
-  if(req.session.passport){
+router.put('/api/productos/:auth/:id', passport.authenticate('auth', {session: false}), async (req, res) => {
+  if(req.isAuthenticated()){
     const user_type = req.params.auth
     if (user_type === 'admin') {
       const id = req.params.id;
@@ -85,8 +86,8 @@ router.put('/api/productos/:auth/:id', async (req, res) => {
   }
 })
 
-router.delete('/api/productos/:auth/:id', async (req, res) => {
-  if(req.session.passport){
+router.delete('/api/productos/:auth/:id', passport.authenticate('auth', {session: false}), async (req, res) => {
+  if(req.isAuthenticated()){
     const user_type = req.params.auth
     if (user_type === 'admin') {
       const { id } = req.params;
@@ -101,8 +102,8 @@ router.delete('/api/productos/:auth/:id', async (req, res) => {
   }
 });
 
-router.get('/images/:id', async (req, res) => {
-  if(req.session.passport){
+router.get('/images/:id', passport.authenticate('auth', {session: false}), async (req, res) => {
+  if(req.isAuthenticated){
       const { id } = req.params;
       const image = await fetchImageById(id)
       res.redirect(image);

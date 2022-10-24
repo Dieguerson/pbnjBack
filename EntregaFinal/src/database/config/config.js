@@ -2,7 +2,7 @@ const { MONGO_URL } = process.env
 
 const settings = {
   mongoDB : {
-    url: MONGO_URL,
+    url: 'mongodb://localhost:27017/',
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,

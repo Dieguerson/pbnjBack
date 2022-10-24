@@ -1,4 +1,5 @@
 require('dotenv').config()
+
 const express = require('express');
 const app = express();
 
@@ -24,6 +25,7 @@ const { engine } = require("express-handlebars")
 
 const home = require('./src/routes/home');
 const info = require('./src/routes/info');
+const config = require('./src/routes/config');
 const cart = require('./src/entities/cart/cartRoutes');
 const products = require('./src/entities/products/productsRoutes');
 const chat = require('./src/entities/chat/chatRoutes');
@@ -71,7 +73,6 @@ if (cluster.isMaster && MODE === 'CLUSTER') {
   }))
 
   app.use(passport.initialize())
-  app.use(passport.session())
 
   app.use(express.json());
   app.use(express.static(__dirname + "/public/"))
@@ -97,6 +98,7 @@ if (cluster.isMaster && MODE === 'CLUSTER') {
 
   app.use(home);
   app.use(info);
+  app.use(config);
   app.use(cart);
   app.use(products);
   app.use(chat);

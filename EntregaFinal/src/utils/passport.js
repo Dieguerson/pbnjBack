@@ -1,5 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const JWTStrategy = require('passport-jwt').Strategy
 const bcrypt = require('bcrypt')
 
 const { fetchUsers } = require('../entities/user/userController')
@@ -39,29 +40,44 @@ passport.use('register', new LocalStrategy(
     done(null, newUser)
 }))
 
-passport.use('auth', new LocalStrategy(
+passport.use('login', new LocalStrategy(
   {
     usernameField: 'userLogEmail',
     passwordField: 'userLogPass',
+    passReqToCallback: true
   },
-  async (userLogEmail, userLogPass, done) => {
+  async (req, userLogEmail, userLogPass, done) => {
     await populateAll()
     const user = allUsers.find(user => user._id === userLogEmail)
     if (!user || !bcrypt.compareSync(userLogPass, user.pass)) return logger.warn(`Email inexistente o pass incorrecta`)
     if (!user || !bcrypt.compareSync(userLogPass, user.pass)) return done(new Error('Email inexistente o pass incorrecta'))
+    req.user = user
     done(null, user)
 }))
 
-passport.serializeUser(async (user, callback) => {
-  await populateAll()
-  callback(null, {_id: user._id, cartId: user.cartId, admin: user.admin})
-})
+const JWTExtractor = (req) => {
+  const { jwt } = req.cookies
+  if (req.cookies.jwt) return jwt
+  if (!req.cookies?.jwt) {
+    return new Error('Sin Autorización')
+  }
+}
 
-passport.deserializeUser(async (user, callback) => {
-  await populateAll()
-  const foundUser = allUsers.find(entry => entry._id === user._id)
-  callback(null, {_id: foundUser?._id, cartId: foundUser?.cartId, admin: foundUser?.admin})
-})
+passport.use('auth', new JWTStrategy(
+    {
+      secretOrKey: 'Diega',
+      jwtFromRequest: JWTExtractor
+    },
+    (token, done) => {
+      if (token) {
+        return done(null, token.payload);
+      } else {
+        logger.warn(`Email inexistente o pass incorrecta`)
+        done(new Error('Email inexistente o pass incorrecta'))
+      }
+    }
+  )
+);
 
 module.exports = {
   passport: passport,

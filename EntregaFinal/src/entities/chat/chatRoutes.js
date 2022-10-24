@@ -2,20 +2,21 @@ const express = require('express');
 const { Router } = express;
 let router = new Router();
 
+const {passport} = require('../../utils/passport');
 const routes = require('../../utils/routes')
 
-router.get('/chat', async (req, res) => {
-  if(req.session.passport){
-    const { admin } = req.session.passport.user
-    const { _id } = req.session.passport.user
+router.get('/chat', passport.authenticate('auth', {session: false}), async (req, res) => {
+  if(req.isAuthenticated()){
+    const { admin } = req.user
+    const { _id } = req.user
     res.render("handlebars/chat.hbs", {script: '/scripts/chat.js', routes: routes(req), data: {admin, _id}})
   } else {
     res.redirect('/')
   }
 })
 
-router.get('/chat/:email', async (req, res) => {
-  if(req.session.passport){
+router.get('/chat/:email', passport.authenticate('auth', {session: false}), async (req, res) => {
+  if(req.isAuthenticated()){
     res.render("handlebars/chat.hbs", {script: '/scripts/chat.js', routes: routes(req)})
   } else {
     res.redirect('/')
