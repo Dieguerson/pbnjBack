@@ -5,7 +5,7 @@ const { Server } = require('socket.io');
 const ioConnection = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: 'https://pbnjback.herokuapp.com/',
+      origin: 'https://entrega-final-coder-dieguerson.herokuapp.com/chat',
       methods: ["GET", "POST"],
       credentials: true
     }
