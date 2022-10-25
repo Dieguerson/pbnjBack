@@ -1,5 +1,9 @@
 const logger = require('../../utils/logger');
 const { fetchCartById } = require('../cart/cartController');
+const { fetchUserById } = require('../user/userController');
+
+const { sendMailPurchase } = require('../../utils/mailing')
+const sendMessage = require('../../utils/messaging')
 
 const PurchaseRepository = require('./PurchaseRepository')
 const purchases = new PurchaseRepository()
@@ -40,7 +44,10 @@ const saveNewOrder = async (cartId) => {
       status: 'generada',
       email: cart.email
     }
+    const user = await fetchUserById(cart.email)
     const id = await purchases.save(newOrder)
+    sendMessage(cart, user.phone, cart.email, user.name)
+    sendMailPurchase(cart, cart.email, user.name)
     return id;
   } catch (error) {
     logger.error(error)
